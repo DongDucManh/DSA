@@ -44,8 +44,32 @@ class Sinhvien{
             return this->lop;
         }
         //-------------------------------------
-
-
+        Sinhvien(){
+            this->name = "";
+            this->age = 0;
+            this->msv = "";
+            this->lop = "";
+        }
+        friend istream& operator>>(istream &is, Sinhvien &sv){
+            cout<<"Nhap ten: "; is>>sv.name;
+            cout<<"Nhap tuoi: "; is>>sv.age;
+            cout<<"Nhap msv: "; is>>sv.msv;
+            cout<<"Nhap lop: "; is>>sv.lop;
+            return is;
+        }
+        friend ostream& operator<<(ostream &os, Sinhvien &sv){
+            os<<"Name: "<<sv.name<<endl;
+            os<<"Age: "<<sv.age<<endl;
+            os<<"Msv: "<<sv.msv<<endl;
+            os<<"Lop: "<<sv.lop<<endl;
+            return os;
+        }
+        bool operator==(Sinhvien &sv){
+            return this->name == sv.name && this->age == sv.age && this->msv == sv.msv && this->lop == sv.lop;
+        }
+        bool operator>(Sinhvien &sv){
+            return this->age > sv.age;
+        }
         void show(){
             cout<<"Name: "<<this->name<<endl;
             cout<<"Age: "<<this->age<<endl;
@@ -53,14 +77,14 @@ class Sinhvien{
             cout<<"Lop: "<<this->lop<<endl;
         }
 };
-class phong{//quan ly phong o ktx
+class Phongo{//quan ly phong o ktx
     private:
         string toanha;
         string name;
         int songuoi;
         list<Sinhvien> sv;
     public:
-        phong(string toanha, string name, int songuoi){
+        Phongo(string toanha, string name, int songuoi){
             this->toanha = toanha;
             this->name = name;
             this->songuoi = songuoi;
@@ -111,6 +135,13 @@ class phong{//quan ly phong o ktx
             advance(it, pos);
             this->sv.erase(it);
         }
+        void clearSv(){
+            this->sv.clear();
+        }
+};
+
+class AppMenu{
+    
 };
 main(){
     cin.tie(0)->sync_with_stdio(0);
