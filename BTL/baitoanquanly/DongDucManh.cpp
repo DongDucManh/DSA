@@ -34,6 +34,14 @@ class Sinhvien{
         string getName(){
             return this->name;
         }
+        string getOnlyName(){
+            string tmp="";
+            for (int i = name.size()-1; i >= 0; i--){
+                if (name[i] == ' ') break;
+                tmp = name[i] + tmp;
+            }
+            return tmp;
+        }
         int getAge(){
             return this->age;
         }
@@ -51,10 +59,12 @@ class Sinhvien{
             this->lop = "";
         }
         friend istream& operator>>(istream &is, Sinhvien &sv){
-            cout<<"Nhap ten: "; is>>sv.name;
-            cout<<"Nhap tuoi: "; is>>sv.age;
-            cout<<"Nhap msv: "; is>>sv.msv;
-            cout<<"Nhap lop: "; is>>sv.lop;
+            is.ignore('\n' - 1e9);
+            getline(is,sv.name);
+            is>>sv.age;
+            is>>sv.msv;
+            is.ignore();
+            getline(is,sv.lop);
             return is;
         }
         friend ostream& operator<<(ostream &os, Sinhvien &sv){
@@ -67,83 +77,101 @@ class Sinhvien{
         bool operator==(Sinhvien &sv){
             return this->name == sv.name && this->age == sv.age && this->msv == sv.msv && this->lop == sv.lop;
         }
-        bool operator>(Sinhvien &sv){
-            return this->age > sv.age;
+        bool operator<(Sinhvien &sv){
+            return this->name < sv.name;
         }
         void show(){
-            cout<<"Name: "<<this->name<<endl;
-            cout<<"Age: "<<this->age<<endl;
-            cout<<"Msv: "<<this->msv<<endl;
-            cout<<"Lop: "<<this->lop<<endl;
+            cout<< left <<setw(10)<<"Name: "<<this->name<<endl;
+            cout<< left <<setw(10)<<"Age: "<<this->age<<endl;
+            cout<< left <<setw(10)<<"Msv: "<<this->msv<<endl;
+            cout<< left <<setw(10)<<"Lop: "<<this->lop<<endl;
         }
 };
-class Phongo{//quan ly phong o ktx
+
+int cmp(Sinhvien a, Sinhvien b){
+    return a.getOnlyName() < b.getOnlyName();
+}
+class Phong{
     private:
-        string toanha;
         string name;
-        int songuoi;
+        string id;
+        int soLuongSinhVien;
         list<Sinhvien> sv;
     public:
-        Phongo(string toanha, string name, int songuoi){
-            this->toanha = toanha;
+        Phong(string name, string id, int soLuongSinhVien, list<Sinhvien> sv){
             this->name = name;
-            this->songuoi = songuoi;
+            this->id = id;
+            this->soLuongSinhVien = soLuongSinhVien;
+            this->sv = sv;
         }
-        void setToanha(string toanha){
-            this->toanha = toanha;
-        }
+        //getter va setter
         void setName(string name){
             this->name = name;
         }
-        void setSonguoi(int songuoi){
-            this->songuoi = songuoi;
+        void setId(string id){
+            this->id = id;
         }
-        string getToanha(){
-            return this->toanha;
+        void setSoLuongSinhVien(int soLuongSinhVien){
+            this->soLuongSinhVien = soLuongSinhVien;
+        }
+        void setSv(list<Sinhvien> sv){
+            this->sv = sv;
         }
         string getName(){
             return this->name;
         }
-        int getSonguoi(){
-            return this->songuoi;
+        string getId(){
+            return this->id;
         }
-        void addSv(Sinhvien sv){
-            this->sv.push_back(sv);
+        int getSoLuongSinhVien(){
+            return this->soLuongSinhVien;
         }
-        void show(){
-            cout<<"Toa nha: "<<this->toanha<<endl;
-            cout<<"Ten phong: "<<this->name<<endl;
-            cout<<"So nguoi: "<<this->songuoi<<endl;
-            cout<<"Danh sach sinh vien: "<<endl;
-            for(auto i: this->sv){
-                i.show();
+        list<Sinhvien> getSv(){
+            return this->sv;
+        }
+        //-------------------------------------
+        Phong(){
+            this->name = "";
+            this->id = "";
+            this->soLuongSinhVien = 0;
+            this->sv = list<Sinhvien>();
+        }
+        friend istream& operator>>(istream &is, Phong &p){
+            is.ignore('\n' - 1e9);
+            getline(is,p.name);
+            is>>p.id;
+            is>>p.soLuongSinhVien;
+            is.ignore();
+            for(int i=0;i<p.soLuongSinhVien;i++){
+                Sinhvien sv;
+                is>>sv;
+                p.sv.push_back(sv);
             }
+            return is;
         }
-        void insertSv(Sinhvien sv, int pos){
-            auto it = this->sv.begin();
-            advance(it, pos);
-            this->sv.insert(it, sv);
+        friend ostream& operator<<(ostream &os, Phong &p){
+            os<<"Name: "<<p.name<<endl;
+            os<<"Id: "<<p.id<<endl;
+            os<<"So luong sinh vien: "<<p.soLuongSinhVien<<endl;
+            os<<left<<setw(25)<<"Name";
+            os<<left<<setw(23)<<"Msv";
+            os<<left<<setw(25)<<"Age";
+            os<<left<<setw(25)<<"Lop"<<endl;
+            for(auto i:p.sv){
+                os<<i.getName()<<setw(30 - i.getName().size())<<right<<i.getMsv()<<setw(30 - i.getMsv().size())<<i.getAge()<<setw(30)<<i.getLop()<<endl;
+            }
+            return os;
         }
-        void pushbackSv(Sinhvien sv){
-            this->sv.push_back(sv);
+         void sortSinhvien() {
+            sv.sort(cmp);
         }
-        void popbackSv(){
-            this->sv.pop_back();
-        }
-        void eraseSv(int pos){
-            auto it = this->sv.begin();
-            advance(it, pos);
-            this->sv.erase(it);
-        }
-        void clearSv(){
-            this->sv.clear();
-        }
-};
-
-class AppMenu{
     
 };
 main(){
-    cin.tie(0)->sync_with_stdio(0);
+    freopen("input.int","r",stdin);
+    Phong p;
+    cin>>p;
+    p.sortSinhvien();
+    cout<<p;
     return 0;
 }
