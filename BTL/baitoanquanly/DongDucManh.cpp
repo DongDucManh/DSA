@@ -137,7 +137,7 @@ class Phong{
             this->sv = list<Sinhvien>();
         }
         friend istream& operator>>(istream &is, Phong &p){
-            is.ignore('\n' - 1e9);
+            //is.ignore('\n' - 1e9);
             getline(is,p.name);
             is>>p.id;
             is>>p.soLuongSinhVien;
@@ -166,6 +166,18 @@ class Phong{
             sv.sort(cmp);
         }
     
+};
+
+class AppMenu{
+    private:
+        list <Phong> ph;
+    public:
+        int menu(){
+            cout<<"1. Nhap danh sach phong"<<endl;
+            cout<<"2. Xuat danh sach phong"<<endl;
+            cout<<"3. Chon phong muon xem"<<endl;
+            
+        }
 };
 main(){
     freopen("input.int","r",stdin);
