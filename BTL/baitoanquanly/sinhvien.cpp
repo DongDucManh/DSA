@@ -57,6 +57,22 @@ class Sinhvien{
             this->msv = "";
             this->lop = "";
         }
+        void inputfile(string f){
+            ifstream filein(f);
+            if(filein.fail()){
+                cout<<"Khong the mo file"<<endl;
+                return;
+            }
+            while(!filein.eof()){
+                getline(filein,name);
+                filein>>age;
+                filein.ignore();
+                getline(filein,msv);
+                getline(filein,lop);
+                Sinhvien sv(name,age,msv,lop);
+            }
+            filein.close();
+        }
         friend istream& operator>>(istream &is, Sinhvien &sv){
             cout<<"Nhap ten: ";
             is.ignore();

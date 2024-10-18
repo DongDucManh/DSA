@@ -1,5 +1,5 @@
-#ifndef PhongKTX_CPP
-#define PhongKTX_CPP
+#ifndef QUANLY_CPP
+#define QUANLY_CPP
 #include <bits/stdc++.h>
 #include "Sinhvien.cpp"
 using namespace std;
@@ -7,14 +7,14 @@ using namespace std;
 int cmp(Sinhvien a, Sinhvien b){
     return a.getOnlyName() < b.getOnlyName();
 }
-class Phong{
+class quanly{
     private:
         string name;
         string id;
         int soLuongSinhVien;
         list<Sinhvien> sv;
     public:
-        Phong(string name, string id, int soLuongSinhVien, list<Sinhvien> sv){
+        quanly(string name, string id, int soLuongSinhVien, list<Sinhvien> sv){
             this->name = name;
             this->id = id;
             this->soLuongSinhVien = soLuongSinhVien;
@@ -46,7 +46,7 @@ class Phong{
         //     return this->sv;
         // }
         //-------------------------------------
-        Phong(){
+        quanly(){
             this->name = "";
             this->id = "";
             this->soLuongSinhVien = 0;
@@ -54,11 +54,14 @@ class Phong{
         }
         string find(string name){
             for(auto i:sv){
-                if(i.getName() == name) return i.getName();
+                if(i.getMsv() == name){
+                    cout<<i;
+                    return "";
+                }
             }
             return "Khong tim thay";
         }
-        friend istream& operator>>(istream &is, Phong &p){
+        friend istream& operator>>(istream &is, quanly &p){
             //is.ignore('\n' - 1e9);
             getline(is,p.name);
             is>>p.id;
@@ -68,7 +71,7 @@ class Phong{
         void pushSinhVien(Sinhvien sv){
             this->sv.push_back(sv);
         }
-        friend ostream& operator<<(ostream &os, Phong &p){
+        friend ostream& operator<<(ostream &os, quanly &p){
             os<<"Name: "<<p.name<<endl;
             os<<"Id: "<<p.id<<endl;
             os<<"So luong sinh vien: "<<p.soLuongSinhVien<<endl;
