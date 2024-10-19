@@ -10,70 +10,56 @@ int cmp(Sinhvien a, Sinhvien b){
 class quanly{
     private:
         string name;
-        string id;
         int soLuongSinhVien;
         list<Sinhvien> sv;
     public:
-        quanly(string name, string id, int soLuongSinhVien, list<Sinhvien> sv){
+        quanly(string name = "KHMT", int soLuongSinhVien=0, list<Sinhvien> sv = list<Sinhvien>()){
             this->name = name;
-            this->id = id;
             this->soLuongSinhVien = soLuongSinhVien;
             this->sv = sv;
         }
-        //getter va setter
-        // void setName(string name){
-        //     this->name = name;
-        // }
-        // void setId(string id){
-        //     this->id = id;
-        // }
-        void setSoLuongSinhVien(int soLuongSinhVien){
-            this->soLuongSinhVien = soLuongSinhVien;
-        }
-        // void setSv(list<Sinhvien> sv){
-        //     this->sv = sv;
-        // }
-        // string getName(){
-        //     return this->name;
-        // }
-        // string getId(){
-        //     return this->id;
-        // }
         int getSoLuongSinhVien(){
             return this->soLuongSinhVien;
         }
-        // list<Sinhvien> getSv(){
-        //     return this->sv;
+        // quanly(){
+        //     this->name = "";
+        //     this->soLuongSinhVien = 0;
+        //     this->sv = list<Sinhvien>();
         // }
-        //-------------------------------------
-        quanly(){
-            this->name = "";
-            this->id = "";
-            this->soLuongSinhVien = 0;
-            this->sv = list<Sinhvien>();
-        }
         string find(string name){
+            bool ok = false;
             for(auto i:sv){
-                if(i.getMsv() == name){
+                if(i.getOnlyName() == name){
                     cout<<i;
-                    return "";
+                    ok = true;
                 }
             }
-            return "Khong tim thay";
-        }
-        friend istream& operator>>(istream &is, quanly &p){
-            //is.ignore('\n' - 1e9);
-            getline(is,p.name);
-            is>>p.id;
-            is>>p.soLuongSinhVien;
-            return is;
+            if(ok) return "";
+            return "Khong tim thay\n";
         }
         void pushSinhVien(Sinhvien sv){
             this->sv.push_back(sv);
+            soLuongSinhVien++;
+        }
+        void remove(string namee){
+            for(auto i=sv.begin();i!=sv.end();i++){
+                if(i->getName() == namee){
+                    sv.erase(i);
+                    soLuongSinhVien--;
+                    return;
+                }
+            }
+        }
+
+
+        friend istream& operator>>(istream &is, quanly &p){
+            //is.ignore('\n' - 1e9);
+            getline(is,p.name);
+            is>>p.soLuongSinhVien;
+            return is;
         }
         friend ostream& operator<<(ostream &os, quanly &p){
             os<<"Name: "<<p.name<<endl;
-            os<<"Id: "<<p.id<<endl;
             os<<"So luong sinh vien: "<<p.soLuongSinhVien<<endl;
             os<<left<<setw(25)<<"Name";
             os<<left<<setw(23)<<"Msv";
