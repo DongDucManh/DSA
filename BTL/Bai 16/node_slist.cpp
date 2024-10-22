@@ -23,7 +23,7 @@ class node{
         T getValid(){
             return valid;
         }
-        node* getNext(){
+        node<T>*& getNext(){
             return next;
         }
 };

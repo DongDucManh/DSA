@@ -12,8 +12,7 @@ class Graph{
         list<data> a[100000];
     public:
         void ipfile(){
-            freopen("Mzeno.inp","r",stdin);
-            freopen("Mzeno.out","w",stdout);
+            
         }
 };
 #endif
