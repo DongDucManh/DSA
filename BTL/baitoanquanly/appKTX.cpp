@@ -42,8 +42,8 @@ string quanlyAPP::menu(){
 }
 void quanlyAPP::run(){
     system("cls");
+    p.sortSinhvienAZ();
     while(1){
-        p.sortSinhvien();
         string c = menu();
         if(c == "1") addSinhVien();
         elif(c == "2") {addSinhVienFromFile();system("pause");}

@@ -7,28 +7,33 @@ using namespace std;
 class Sinhvien{
     private:
         string name;
-        int age;
+        string birth;
         string msv;
+        double diem;
         string lop;
     public:
-        Sinhvien(string name, int age, string msv, string lop){
+        Sinhvien(string name, string ngayinh, string msv, string lop, float diem){
             this->name = name;
-            this->age = age;
+            this->birth = birth;
             this->msv = msv;
             this->lop = lop;
+            this->diem = diem;
         }
         //getter va setter
         void setName(string name){
             this->name = name;
         }
-        void setAge(int age){
-            this->age = age;
+        void setBirth(string birth){
+            this->birth = birth;
         }
         void setMsv(string msv){
             this->msv = msv;
         }
         void setLop(string lop){
             this->lop = lop;
+        }
+        void setDiem(double diem){
+            this->diem = diem;
         }
         string getName(){
             return this->name;
@@ -41,8 +46,8 @@ class Sinhvien{
             }
             return tmp;
         }
-        int getAge(){
-            return this->age;
+        string getBirth(){
+            return this->birth;
         }
         string getMsv(){
             return this->msv;
@@ -50,12 +55,16 @@ class Sinhvien{
         string getLop(){
             return this->lop;
         }
+        double getDiem(){
+            return this->diem;
+        }
         //-------------------------------------
         Sinhvien(){
             this->name = "";
-            this->age = 0;
+            this->birth = "";
             this->msv = "";
             this->lop = "";
+            this->diem = 0;
         }
         void inputfile(string f){
             ifstream filein(f);
@@ -65,11 +74,11 @@ class Sinhvien{
             }
             while(!filein.eof()){
                 getline(filein,name);
-                filein>>age;
+                filein>>birth;
                 filein.ignore();
                 getline(filein,msv);
                 getline(filein,lop);
-                Sinhvien sv(name,age,msv,lop);
+                Sinhvien sv(name,birth,msv,lop,diem);
             }
             filein.close();
         }
@@ -77,33 +86,38 @@ class Sinhvien{
             cout<<"Nhap ten: ";
             is.ignore();
             getline(is,sv.name);
-            cout<<"Nhap tuoi: ";
-            is>>sv.age;
+            cout<<"Nhap ngay sinh: ";
+            is.ignore();
+            getline(is,sv.birth);
             cout<<"Nhap msv: ";
             is>>sv.msv;
             cout<<"Nhap lop: ";
             is.ignore();
             getline(is,sv.lop);
+            cout<<"Nhap diem: ";
+            is>>sv.diem;
             return is;
         }
         friend ostream& operator<<(ostream &os, Sinhvien &sv){
             os<<"Name: "<<sv.name<<endl;
-            os<<"Age: "<<sv.age<<endl;
+            os<<"Birth: "<<sv.birth<<endl;
             os<<"Msv: "<<sv.msv<<endl;
             os<<"Lop: "<<sv.lop<<endl;
+            os<<"Diem: "<<sv.diem<<endl;
             return os;
         }
         bool operator==(Sinhvien &sv){
-            return this->name == sv.name && this->age == sv.age && this->msv == sv.msv && this->lop == sv.lop;
+            return this->name == sv.name && this->birth == sv.birth && this->msv == sv.msv && this->lop == sv.lop;
         }
         bool operator<(Sinhvien &sv){
             return this->name < sv.name;
         }
         void show(){
             cout<< left <<setw(10)<<"Name: "<<this->name<<endl;
-            cout<< left <<setw(10)<<"Age: "<<this->age<<endl;
+            cout<< left <<setw(10)<<"Birth: "<<this->birth<<endl;
             cout<< left <<setw(10)<<"Msv: "<<this->msv<<endl;
             cout<< left <<setw(10)<<"Lop: "<<this->lop<<endl;
+            cout<< left <<setw(10)<<"Diem: "<<fix_(2)<<this->diem<<endl;
         }
 };
 #endif

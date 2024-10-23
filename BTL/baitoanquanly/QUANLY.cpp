@@ -4,8 +4,11 @@
 #include "Sinhvien.cpp"
 using namespace std;
 #define elif else if
-int cmp(Sinhvien a, Sinhvien b){
+int cmpName(Sinhvien a, Sinhvien b){
     return a.getOnlyName() < b.getOnlyName();
+}
+int cmpDiem(Sinhvien a, Sinhvien b){
+    return a.getDiem() < b.getDiem();
 }
 class quanly{
     private:
@@ -63,15 +66,20 @@ class quanly{
             os<<"So luong sinh vien: "<<p.soLuongSinhVien<<endl;
             os<<left<<setw(25)<<"Name";
             os<<left<<setw(23)<<"Msv";
-            os<<left<<setw(25)<<"Age";
-            os<<left<<setw(25)<<"Lop"<<endl;
+            os<<left<<setw(25)<<"Birth";
+            os<<left<<setw(25)<<"Lop";
+            os<<left<<setw(25)<<"Diem"<<endl;
             for(auto i:p.sv){
-                os<<i.getName()<<setw(30 - i.getName().size())<<right<<i.getMsv()<<setw(30 - i.getMsv().size())<<i.getAge()<<setw(30)<<i.getLop()<<endl;
+                os<<i.getName()<<setw(30 - i.getName().size())<<right<<i.getMsv()<<setw(30 - i.getMsv().size())
+                <<i.getBirth()<<setw(30)<<i.getLop()<<setw(30)<<i.getDiem()<<endl;
             }
             return os;
         }
-        void sortSinhvien() {
-            sv.sort(cmp);
+        void sortSinhvienAZ() {
+            sv.sort(cmpName);
+        }
+        void sortSinhvienDiem() {
+            sv.sort(cmpDiem);
         }
     
 };
