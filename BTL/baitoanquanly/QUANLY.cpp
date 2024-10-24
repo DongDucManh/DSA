@@ -8,7 +8,7 @@ int cmpName(Sinhvien a, Sinhvien b){
     return a.getOnlyName() < b.getOnlyName();
 }
 int cmpDiem(Sinhvien a, Sinhvien b){
-    return a.getDiem() < b.getDiem();
+    return a.getDiem() > b.getDiem();
 }
 class quanly{
     private:
@@ -61,18 +61,26 @@ class quanly{
             is>>p.soLuongSinhVien;
             return is;
         }
-        friend ostream& operator<<(ostream &os, quanly &p){
-            os<<"Name: "<<p.name<<endl;
-            os<<"So luong sinh vien: "<<p.soLuongSinhVien<<endl;
-            os<<left<<setw(25)<<"Name";
-            os<<left<<setw(23)<<"Msv";
-            os<<left<<setw(25)<<"Birth";
-            os<<left<<setw(25)<<"Lop";
-            os<<left<<setw(25)<<"Diem"<<endl;
-            for(auto i:p.sv){
-                os<<i.getName()<<setw(30 - i.getName().size())<<right<<i.getMsv()<<setw(30 - i.getMsv().size())
-                <<i.getBirth()<<setw(30)<<i.getLop()<<setw(30)<<i.getDiem()<<endl;
+        friend ostream& operator<<(ostream &os, quanly &p) {
+            os << "Name: " << p.name << endl;
+            os << "So luong sinh vien: " << p.soLuongSinhVien << endl;
+            os <<setfill('-')<<setw(130)<<"-"<<endl;
+            os<<setfill(' ');
+            os << left << setw(30) << "Name"
+            << left << setw(30) << "Birth"
+            << left << setw(30) << "Msv"
+            << left << setw(30) << "Lop" 
+            << left << setw(30) << "Diem" << endl;
+            os << setfill('-') << setw(130) << "-" << endl;
+            os << setfill(' ');
+            for (auto i : p.sv) {
+                os << left << setw(30) << i.getName()
+                << left << setw(30) << i.getBirth()
+                << left << setw(30) << i.getMsv()
+                << left << setw(30) << i.getLop()
+                << left << setw(30) << i.getDiem() << endl;
             }
+            os << setfill('-') << setw(130) << "-" << endl;
             return os;
         }
         void sortSinhvienAZ() {

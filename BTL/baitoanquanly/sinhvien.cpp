@@ -12,7 +12,7 @@ class Sinhvien{
         double diem;
         string lop;
     public:
-        Sinhvien(string name, string ngayinh, string msv, string lop, float diem){
+        Sinhvien(string name, string birth, string msv, string lop, float diem){
             this->name = name;
             this->birth = birth;
             this->msv = msv;
@@ -82,12 +82,12 @@ class Sinhvien{
             }
             filein.close();
         }
+        
         friend istream& operator>>(istream &is, Sinhvien &sv){
             cout<<"Nhap ten: ";
             is.ignore();
             getline(is,sv.name);
             cout<<"Nhap ngay sinh: ";
-            is.ignore();
             getline(is,sv.birth);
             cout<<"Nhap msv: ";
             is>>sv.msv;

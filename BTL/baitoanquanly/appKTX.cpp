@@ -19,12 +19,15 @@ class quanlyAPP{
         void hienthi(){
             cout<<"1. Them sinh vien tu ban phim"<<endl;
             cout<<"2. Them sinh vien tu file"<<endl;
-            cout<<"3. Xoa sinh vien"<<endl;
-            cout<<"4. Hien thi thong tin phong"<<endl;
-            cout<<"5. Thay the sinh vien"<<endl;
-            cout<<"6. Tim sinh vien"<<endl;
-            cout<<"7. Thoat"<<endl;
-            cout<<"Chon: ";
+            cout<<"3. Sap xep sinh vien theo ten"<<endl;
+            cout<<"4. Sap xep sinh vien theo diem"<<endl;
+            cout<<"5. Xoa sinh vien"<<endl;
+            cout<<"6. Hien thi thong tin lop"<<endl;
+            cout<<"7. Thay the sinh vien"<<endl;
+            cout<<"8. Tim sinh vien"<<endl;
+            cout<<"9. Lam sach man hinh"<<endl;
+            cout<<"10. Hien thi menu"<<endl;
+            cout<<"11. Thoat"<<endl;
         }   
 };
 
@@ -32,9 +35,8 @@ string quanlyAPP::menu(){
     string c;
     while (1)
     {
-        hienthi();
         cin>>c;
-        if(c>="1" && c<="7") return c;
+        if(c>="1" && c<="9") return c;
         system("cls");
         cout<<"Lua chon khong hop le, vui long nhap lai!!!!"<<endl;
     }
@@ -43,16 +45,32 @@ string quanlyAPP::menu(){
 void quanlyAPP::run(){
     system("cls");
     p.sortSinhvienAZ();
+    hienthi();
     while(1){
+        cout<<"Nhap lua chon: ";
         string c = menu();
-        if(c == "1") addSinhVien();
-        elif(c == "2") {addSinhVienFromFile();system("pause");}
-        elif(c == "3") {removeSinhVien();system("pause");}
-        elif(c == "4") {ListSinhvien();system("pause");}
-        elif(c == "5") {replaceSinhVien();system("pause");}
-        elif(c == "6") {findSinhVien();system("pause");}
-        elif(c == "7") break;
-        system("cls");
+        if (c == "1") addSinhVien();
+        elif (c == "2") addSinhVienFromFile();
+        elif (c == "3") p.sortSinhvienAZ();
+        elif (c == "4") p.sortSinhvienDiem();
+        elif (c == "5") removeSinhVien();
+        elif (c == "6") ListSinhvien();
+        elif (c == "7") replaceSinhVien();
+        elif (c == "8") findSinhVien();
+        elif (c == "9") {
+            system("cls");
+            hienthi();
+            continue;
+        }
+        elif (c == "10") {
+            hienthi();
+            continue;
+        }
+        elif (c == "11") {
+            cout<<"Cam on ban da su dung chuong trinh"<<endl;
+            break;
+        }
+        
     }
 }
 void quanlyAPP::addSinhVien(){
@@ -70,14 +88,19 @@ void quanlyAPP::addSinhVienFromFile(){
         cout<<"Khong the mo file"<<endl;
         return;
     }
-    filein.ignore('\n'-1e9);
     while(!filein.eof()){
-        Sinhvien sv;
-        filein>>sv;
+        string name,birth,msv,lop;
+        double diem;
+        getline(filein,name);
+        getline(filein,birth);
+        getline(filein,msv);
+        getline(filein,lop);
+        filein>>diem;
+        Sinhvien sv(name,birth,msv,lop,diem);
         p.pushSinhVien(sv);
+        filein.ignore();
     }
     filein.close();
-    system("cls");
     cout<<"Them sinh vien thanh cong"<<endl;
 }
 void quanlyAPP:: ListSinhvien(){
