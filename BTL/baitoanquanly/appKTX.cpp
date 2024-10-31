@@ -4,6 +4,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define elif else if
+#define endl "\n"
 class quanlyAPP{
     private:
         quanly p;
@@ -12,7 +13,8 @@ class quanlyAPP{
         void run();
         void addSinhVien();
         void addSinhVienFromFile();
-        void findSinhVien();
+        void findSinhVienName();
+        void findSinhVienM();
         void removeSinhVien();
         void ListSinhvien();
         void replaceSinhVien();
@@ -21,13 +23,14 @@ class quanlyAPP{
             cout<<"2. Them sinh vien tu file"<<endl;
             cout<<"3. Sap xep sinh vien theo ten"<<endl;
             cout<<"4. Sap xep sinh vien theo diem"<<endl;
-            cout<<"5. Xoa sinh vien"<<endl;
+            cout<<"5. Xoa sinh vien voi ma sinh vien"<<endl;
             cout<<"6. Hien thi thong tin lop"<<endl;
-            cout<<"7. Thay the sinh vien"<<endl;
-            cout<<"8. Tim sinh vien"<<endl;
-            cout<<"9. Lam sach man hinh"<<endl;
-            cout<<"10. Hien thi menu"<<endl;
-            cout<<"11. Thoat"<<endl;
+            cout<<"7. Thay the sinh vien voi ma sinh vien"<<endl;
+            cout<<"8. Tim sinh vien theo ma sinh vien"<<endl;
+            cout<<"9. Tim sinh vien theo ten"<<endl;
+            cout<<"10. Lam sach man hinh"<<endl;
+            cout<<"11. Hien thi menu"<<endl;
+            cout<<"12. Thoat"<<endl;
         }   
 };
 
@@ -56,17 +59,18 @@ void quanlyAPP::run(){
         elif (c == "5") removeSinhVien();
         elif (c == "6") ListSinhvien();
         elif (c == "7") replaceSinhVien();
-        elif (c == "8") findSinhVien();
-        elif (c == "9") {
+        elif (c == "8") findSinhVienM();
+        elif (c == "9") findSinhVienName();
+        elif (c == "10") {
             system("cls");
             hienthi();
             continue;
         }
-        elif (c == "10") {
+        elif (c == "11") {
             hienthi();
             continue;
         }
-        elif (c == "11") {
+        elif (c == "12") {
             cout<<"Cam on ban da su dung chuong trinh"<<endl;
             break;
         }
@@ -106,26 +110,32 @@ void quanlyAPP::addSinhVienFromFile(){
 void quanlyAPP:: ListSinhvien(){
     cout<<p;
 }
-void quanlyAPP::findSinhVien(){
+void quanlyAPP::findSinhVienName(){
     string name;
     cout<<"Nhap ten sinh vien can tim: ";
     cin.ignore();
     getline(cin,name);
     cout<<p.find(name);
 }
+void quanlyAPP:: findSinhVienM(){
+    string msv;
+    cout<<"Nhap msv can tim: ";
+    cin>>msv;
+    cout<<p.findM(msv);
+}
 void quanlyAPP::removeSinhVien(){
     string name;
+    ListSinhvien();
     cout<<"Nhap ten sinh vien can xoa: ";
     cin.ignore();
     getline(cin,name);
     p.remove(name);
 }
 void quanlyAPP::replaceSinhVien(){
-    string name;
-    cout<<"Nhap ten sinh vien can thay the: ";
-    cin.ignore();
-    getline(cin,name);
-    p.remove(name);
+    string msv;
+    cout<<"Nhap ma sinh vien can thay the: ";
+    cin>>msv;
+    p.remove(msv);
     cout<<"Nhap thong tin sinh vien moi:\n"<<endl;
     Sinhvien sv;
     cin>>sv;

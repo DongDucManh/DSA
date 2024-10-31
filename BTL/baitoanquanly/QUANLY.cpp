@@ -40,13 +40,27 @@ class quanly{
             if(ok) return "";
             return "Khong tim thay\n";
         }
+        string findM(string MSV){
+            bool ok = false;
+            for(auto i:sv){
+                if(i.getMsv() == MSV){
+                    cout<<i;
+                    ok = true;
+                }
+            }
+            if(ok) return "";
+            return "Khong tim thay\n";
+        }
+
+
+
         void pushSinhVien(Sinhvien sv){
             this->sv.push_back(sv);
             soLuongSinhVien++;
         }
-        void remove(string namee){
+        void remove(string ma){
             for(auto i=sv.begin();i!=sv.end();i++){
-                if(i->getName() == namee){
+                if(i->getMsv() == ma){
                     sv.erase(i);
                     soLuongSinhVien--;
                     return;
