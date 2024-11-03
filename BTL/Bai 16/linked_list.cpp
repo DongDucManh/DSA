@@ -18,11 +18,11 @@ class linked_list{
                 node<T>* curr;
             public:
                 iterator(node<T>* p): curr(p){}
-                node<T>* getCurr(){
-                    return curr;
+                bool operator==( iterator b){
+                    return curr == b.curr;
                 }
                 bool operator!=( iterator b){
-                    return curr == b.getCurr();
+                    return curr == b.curr;
                 }
                 iterator operator++(int){
                     node<T>* tmp = curr;
@@ -30,19 +30,18 @@ class linked_list{
                     return tmp;
                 }
                 iterator operator++(){
-                    curr = curr->getNext();
-                    return curr;
+                    return curr->getNext();
                 }
                 T operator*()
                 {
-                    return this->getCurr()->getValid();
+                    return curr->getValid();
                 }
         };
         iterator begin(){
             return head;
         }
         iterator end(){
-            return NULL;
+            return trail->getNext();
         }
         int size(){
             return len;
@@ -50,10 +49,10 @@ class linked_list{
         bool empty(){
             return len == 0;
         }
-        T& front(){
+        T front(){
             return head->getValid();
         }
-        T& back(){
+        T back(){
             return trail->getValid();
         }
         void push_front(T val){

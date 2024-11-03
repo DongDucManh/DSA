@@ -19,7 +19,7 @@ class Graph{
     public:
         Graph(int n){
             soDinh = n;
-            graph = new linked_list<data>[n+1];
+            graph = new linked_list<data>[n+5];
         }
         Graph(){
             soDinh = 0;
@@ -31,6 +31,9 @@ class Graph{
         Graph* operator&(){
             return this;
         }
+        linked_list<data>& operator[](int i){
+            return graph[i];
+        }
         void addEdge(data u, data v){
             graph[u].push_back(v);
             graph[v].push_back(u);
@@ -39,13 +42,14 @@ class Graph{
             ifstream file(filename);
             int n, m;
             file >> n >> m;
-            Graph g(n);
+            soDinh = n;
+            graph = new linked_list<data>[n+1];
             for (int i = 0; i < m; i++){
                 int u, v;
                 file >> u >> v;
-                g.addEdge(u, v);
+                addEdge(u, v);
             }
-            *this = g;
+            
             file.close();
         }
         void writeFile(string filename){
@@ -61,8 +65,10 @@ class Graph{
             file.close();
         }
         int dfs(){//Dem so thanh phan lien thong
-            bool* visited = new bool[soDinh];
-            memset(visited, false, sizeof(visited));
+            bool *visited = new bool[soDinh+1];
+            for (int i = 1; i <= soDinh; i++){
+                visited[i] = false;
+            }
             stack<data> S;
             int count = 0;
             for (int v = 1; v <= soDinh; v++){
@@ -111,7 +117,7 @@ class Graph{
             return false;
         }
         void printGraph(){
-            for (int i = 0; i < soDinh; i++){
+            for (int i = 1; i <= soDinh; i++){
                 cout << i << ": ";
                 for (data j : graph[i]){
                     cout << j << " ";
