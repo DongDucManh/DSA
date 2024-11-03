@@ -12,6 +12,7 @@ class linked_list{
         int len;
     public:
         linked_list():head(NULL), trail(NULL), len(T()){}
+        linked_list(T val):head(new node<T>(val)), trail(head), len(1){}
         class iterator{
             private:
                 node<T>* curr;
@@ -32,9 +33,9 @@ class linked_list{
                     curr = curr->getNext();
                     return curr;
                 }
-                T& operator*()
+                T operator*()
                 {
-                    return this->getCurr();
+                    return this->getCurr()->getValid();
                 }
         };
         iterator begin(){
