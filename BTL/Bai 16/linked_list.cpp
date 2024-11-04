@@ -22,7 +22,7 @@ class linked_list{
                     return curr == b.curr;
                 }
                 bool operator!=( iterator b){
-                    return curr == b.curr;
+                    return curr != b.curr;
                 }
                 iterator operator++(int){
                     node<T>* tmp = curr;
@@ -32,7 +32,7 @@ class linked_list{
                 iterator operator++(){
                     return curr->getNext();
                 }
-                T operator*()
+                T& operator*()
                 {
                     return curr->getValid();
                 }
@@ -41,7 +41,7 @@ class linked_list{
             return head;
         }
         iterator end(){
-            return trail->getNext();
+            return NULL;
         }
         int size(){
             return len;
@@ -57,8 +57,8 @@ class linked_list{
         }
         void push_front(T val){
             head = new node<T>(val, head);
-            if(len == 1) trail = head;
             len++;
+            if(len == 1) trail = head;
         }
         void push_back(T val){
             if(len == 0) head = trail = new node<T>(val);

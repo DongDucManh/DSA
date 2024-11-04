@@ -79,10 +79,10 @@ class Graph{
                     while (!S.empty()){
                         data u = S.top();
                         S.pop();
-                        for (data i : graph[u]){
-                            if (!visited[i]){
-                                visited[i] = true;
-                                S.push(i);
+                        for (typename linked_list<data>::iterator i = graph[u].begin(); i != graph[u].end(); i++){
+                            if (!visited[*i]){
+                                visited[*i] = true;
+                                S.push(*i);
                             }
                         }
                     }
@@ -102,14 +102,14 @@ class Graph{
             while (!q.empty()){
                 data current = q.front();
                 q.pop();
-                for (data i : graph[current]){
-                    if (i == end){
+                for (typename linked_list<data>::iterator i = graph[current].begin(); i != graph[current].end(); i++){
+                    if (*i == end){
                         delete[] visited;
                         return true;
                     }
-                    if (!visited[i]){
-                        visited[i] = true;
-                        q.push(i);
+                    if (!visited[*i]){
+                        visited[*i] = true;
+                        q.push(*i);
                     }
                 }
             }
@@ -119,8 +119,8 @@ class Graph{
         void printGraph(){
             for (int i = 1; i <= soDinh; i++){
                 cout << i << ": ";
-                for (data j : graph[i]){
-                    cout << j << " ";
+                for (typename linked_list<data>::iterator j = graph[i].begin(); j != graph[i].end(); j++){
+                    cout << *j << " ";
                 }
                 cout << endl;
             }

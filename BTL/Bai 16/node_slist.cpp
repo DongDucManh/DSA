@@ -20,7 +20,7 @@ class node{
         void setNext(node *next){
             this->next = next;
         }
-        T getValid(){
+        T& getValid(){
             return valid;
         }
         node<T>*& getNext(){
