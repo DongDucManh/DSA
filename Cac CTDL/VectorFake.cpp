@@ -125,10 +125,21 @@ class Vector{
 			elements[x] = val; 
 			Size++;
         }
+
+		//dinh nghia =
+		Vector& operator=(Vector a){
+			Size = a.Size;
+			space = a.space;
+			elements = new T[space];
+			for (int i=0;i<Size;i++) elements[i] = a.elements[i];
+			return *this;
+		}
 };
 main(){
 	Vector <int>a;
 	a.push_back(3);
-	cout<<a.size();
+	Vector<int>b;
+	b = a;
+	cout<<b.size();
 }
 #endif
