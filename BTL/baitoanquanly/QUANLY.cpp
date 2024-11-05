@@ -51,7 +51,14 @@ class quanly{
             if(ok) return "";
             return "Khong tim thay\n";
         }
-
+        Sinhvien* findM2(string MSV){
+            for(auto i=sv.begin();i!=sv.end();i++){
+                if(i->getMsv() == MSV){
+                    return &(*i);
+                }
+            }
+            return NULL;
+        }
 
 
         void pushSinhVien(Sinhvien sv){
@@ -81,18 +88,18 @@ class quanly{
             os <<setfill('-')<<setw(130)<<"-"<<endl;
             os<<setfill(' ');
             os << left << setw(30) << "Name"
-            << left << setw(30) << "Birth"
-            << left << setw(30) << "Msv"
-            << left << setw(30) << "Lop" 
-            << left << setw(30) << "Diem" << endl;
+            << setw(30) << "Birth"
+            << setw(30) << "Msv"
+            << setw(30) << "Lop" 
+            << setw(30) << "Diem" << endl;
             os << setfill('-') << setw(130) << "-" << endl;
             os << setfill(' ');
             for (auto i : p.sv) {
                 os << left << setw(30) << i.getName()
-                << left << setw(30) << i.getBirth()
-                << left << setw(30) << i.getMsv()
-                << left << setw(30) << i.getLop()
-                << left << setw(30) << i.getDiem() << endl;
+                << setw(30) << i.getBirth()
+                << setw(30) << i.getMsv()
+                << setw(30) << i.getLop()
+                << setw(30) << i.getDiem() << endl;
             }
             os << setfill('-') << setw(130) << "-" << endl;
             return os;

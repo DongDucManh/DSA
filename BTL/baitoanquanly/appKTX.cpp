@@ -124,22 +124,27 @@ void quanlyAPP:: findSinhVienM(){
     cout<<p.findM(msv);
 }
 void quanlyAPP::removeSinhVien(){
-    string name;
+    string msv;
     ListSinhvien();
-    cout<<"Nhap ten sinh vien can xoa: ";
+    cout<<"Nhap ma sinh vien can xoa: ";
     cin.ignore();
-    getline(cin,name);
-    p.remove(name);
+    getline(cin,msv);
+    p.remove(msv);
 }
 void quanlyAPP::replaceSinhVien(){
+    ListSinhvien();
     string msv;
     cout<<"Nhap ma sinh vien can thay the: ";
     cin>>msv;
-    p.remove(msv);
+    Sinhvien *tmp = p.findM2(msv);
+    if (tmp == NULL){
+        cout<<"Khong tim thay sinh vien"<<endl;
+        return;
+    }
     cout<<"Nhap thong tin sinh vien moi:\n"<<endl;
     Sinhvien sv;
     cin>>sv;
-    p.pushSinhVien(sv);
+    *tmp = sv;
     cout<<"Thay the sinh vien thanh cong"<<endl;
 }
 #endif
