@@ -1,1 +1,9 @@
-5 4
+So dinh: 10
+So canh: 6
+Danh sach canh: 
+1 7
+2 7
+3 5
+3 4
+4 5
+8 9

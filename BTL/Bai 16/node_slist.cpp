@@ -7,21 +7,21 @@ using namespace std;
 template <class T>
 class node{
     private:
-        T valid;
+        T elem;
         node* next;
     public:
         node(T val = T(), node* nt = NULL){
-            valid = val;
+            elem = val;
             next = nt;
         }
-        void setValid(T valid){
-            this->valid = valid;
+        void setElem(T elem){
+            this->elem = elem;
         }
         void setNext(node *next){
             this->next = next;
         }
-        T& getValid(){
-            return valid;
+        T& getElem(){
+            return elem;
         }
         node<T>*& getNext(){
             return next;

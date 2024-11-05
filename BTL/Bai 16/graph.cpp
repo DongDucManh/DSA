@@ -7,22 +7,22 @@ using namespace std;
 template<class data>
 class Graph{
     private:
-        int soDinh;
-        linked_list<data>* graph;
+        int vertices;
+        slist<data>* graph;
         int getEdgeCount(){
             int count = 0;
-            for (int i = 1; i <= soDinh; i++){
+            for (int i = 1; i <= vertices; i++){
                 count += graph[i].size();
             }
             return count/2;
         }
     public:
         Graph(int n){
-            soDinh = n;
-            graph = new linked_list<data>[n+5];
+            vertices = n;
+            graph = new slist<data>[n+5];
         }
         Graph(){
-            soDinh = 0;
+            vertices = 0;
             graph = NULL;
         }
         ~Graph(){
@@ -31,19 +31,23 @@ class Graph{
         Graph* operator&(){
             return this;
         }
-        linked_list<data>& operator[](int i){
+        slist<data>& operator[](int i){
             return graph[i];
         }
         void addEdge(data u, data v){
             graph[u].push_back(v);
             graph[v].push_back(u);
         }
+
+        int getVertices(){
+            return vertices;
+        }
         void readFile(string filename){
             ifstream file(filename);
             int n, m;
             file >> n >> m;
-            soDinh = n;
-            graph = new linked_list<data>[n+1];
+            vertices = n;
+            graph = new slist<data>[n+1];
             for (int i = 0; i < m; i++){
                 int u, v;
                 file >> u >> v;
@@ -54,24 +58,26 @@ class Graph{
         }
         void writeFile(string filename){
             ofstream file(filename);
-            file << soDinh << " " << getEdgeCount() << endl;
-            for (int i = 1; i <= soDinh; i++){
-                for (data j : graph[i]){
-                    if (i < j){
-                        file << i << " " << j << endl;
+            file<<"So dinh: "<<vertices<<endl;
+            file<<"So canh: "<<getEdgeCount()<<endl;
+            file<<"Danh sach canh: "<<endl;
+            for (int i = 1; i <= vertices; i++){
+                for (typename slist<data>::iterator j = graph[i].begin(); j != graph[i].end(); j++){
+                    if (i < *j){
+                        file << i << " " << *j << endl;
                     }
                 }
             }
-            file.close();
         }
-        int dfs(){//Dem so thanh phan lien thong
-            bool *visited = new bool[soDinh+1];
-            for (int i = 1; i <= soDinh; i++){
+        //Dem so thanh phan lien thong voi DFS
+        int sothanhphanlienthong(){
+            bool *visited = new bool[vertices+1];
+            for (int i = 1; i <= vertices; i++){
                 visited[i] = false;
             }
             stack<data> S;
             int count = 0;
-            for (int v = 1; v <= soDinh; v++){
+            for (int v = 1; v <= vertices; v++){
                 if (!visited[v]){
                     count++;
                     S.push(v);
@@ -79,7 +85,7 @@ class Graph{
                     while (!S.empty()){
                         data u = S.top();
                         S.pop();
-                        for (typename linked_list<data>::iterator i = graph[u].begin(); i != graph[u].end(); i++){
+                        for (typename slist<data>::iterator i = graph[u].begin(); i != graph[u].end(); i++){
                             if (!visited[*i]){
                                 visited[*i] = true;
                                 S.push(*i);
@@ -94,7 +100,7 @@ class Graph{
         //BFS de kiem tra duong di giua hai dinh
         bool checkPath(data start, data end){
             if (start == end) return true;
-            bool* visited = new bool[soDinh];
+            bool* visited = new bool[vertices];
             memset(visited, false, sizeof(visited));
             queue<data> q;
             q.push(start);
@@ -102,7 +108,7 @@ class Graph{
             while (!q.empty()){
                 data current = q.front();
                 q.pop();
-                for (typename linked_list<data>::iterator i = graph[current].begin(); i != graph[current].end(); i++){
+                for (typename slist<data>::iterator i = graph[current].begin(); i != graph[current].end(); i++){
                     if (*i == end){
                         delete[] visited;
                         return true;
@@ -117,9 +123,9 @@ class Graph{
             return false;
         }
         void printGraph(){
-            for (int i = 1; i <= soDinh; i++){
+            for (int i = 1; i <= vertices; i++){
                 cout << i << ": ";
-                for (typename linked_list<data>::iterator j = graph[i].begin(); j != graph[i].end(); j++){
+                for (typename slist<data>::iterator j = graph[i].begin(); j != graph[i].end(); j++){
                     cout << *j << " ";
                 }
                 cout << endl;
@@ -127,39 +133,3 @@ class Graph{
         }
 };
 #endif
-// #include<bits/stdc++.h>
-// using namespace std;
-// int main()
-// {
-//     int n,m,u,v,k=0,res=0,dem;
-//     cin>>n>>m;
-//     int d[n+5]={};
-//     vector<int> A[n+5];
-//     while(m--)
-//     {
-//         cin>>u>>v;
-//         A[u].push_back(v);A[v].push_back(u);
-//     }
-//     for(int i=1;i<=n;i++)
-//     if(d[i]==0)
-//     {
-//         k++;
-//         dem=1;
-//         d[i]=1;
-//         stack<int> S;
-//         S.push(i);
-//         while(S.size())
-//         {
-//             u=S.top();S.pop();
-//             for(int v:A[u])
-//             if(d[v]==0)
-//             {
-//                 d[v]=1;
-//                 dem++;
-//                 S.push(v);
-//             }
-//         }
-//         if(res<dem) res=dem;
-//     }
-//     cout<<k<<" \n"<<res;
-// }

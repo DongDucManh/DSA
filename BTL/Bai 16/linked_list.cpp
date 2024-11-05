@@ -5,14 +5,14 @@
 using namespace std;
 #define elif else if
 template <class T>
-class linked_list{
+class slist{
     private:
         node<T>* head;
         node<T>* trail;
         int len;
     public:
-        linked_list():head(NULL), trail(NULL), len(T()){}
-        linked_list(T val):head(new node<T>(val)), trail(head), len(1){}
+        slist():head(NULL), trail(NULL), len(T()){}
+        slist(T val):head(new node<T>(val)), trail(head), len(1){}
         class iterator{
             private:
                 node<T>* curr;
@@ -34,7 +34,7 @@ class linked_list{
                 }
                 T& operator*()
                 {
-                    return curr->getValid();
+                    return curr->getElem();
                 }
         };
         iterator begin(){
@@ -88,6 +88,29 @@ class linked_list{
                 trail = tmp;
                 trail->setNext(NULL);
             }
+            len--;
+        }
+        void insert(iterator pos, T val){
+            if(pos == NULL) return;
+            if(pos == head){
+                push_front(val);
+                return;
+            }
+            node<T>* tmp = head;
+            while(tmp->getNext() != pos.curr) tmp = tmp->getNext();
+            tmp->setNext(new node<T>(val, pos.curr));
+            len++;
+        }
+        void erase(iterator pos){
+            if(pos == NULL) return;
+            if(pos == head){
+                pop_front();
+                return;
+            }
+            node<T>* tmp = head;
+            while(tmp->getNext() != pos.curr) tmp = tmp->getNext();
+            tmp->setNext(pos.curr->getNext());
+            delete pos.curr;
             len--;
         }
 
