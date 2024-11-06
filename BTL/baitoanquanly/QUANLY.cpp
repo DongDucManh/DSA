@@ -7,32 +7,22 @@ using namespace std;
 int cmpName(Sinhvien a, Sinhvien b){
     return a.getOnlyName() < b.getOnlyName();
 }
-int cmpDiem(Sinhvien a, Sinhvien b){
-    return a.getDiem() > b.getDiem();
-}
 class quanly{
     private:
-        string name;
         int soLuongSinhVien;
-        list<Sinhvien> sv;
+        list<Sinhvien> sinhviens;
     public:
-        quanly(string name = "KHMT", int soLuongSinhVien=0, list<Sinhvien> sv = list<Sinhvien>()){
-            this->name = name;
+        quanly( int soLuongSinhVien=0, list<Sinhvien> sv = list<Sinhvien>()){
             this->soLuongSinhVien = soLuongSinhVien;
-            this->sv = sv;
+            this->sinhviens = sv;
         }
         int getSoLuongSinhVien(){
             return this->soLuongSinhVien;
         }
-        // quanly(){
-        //     this->name = "";
-        //     this->soLuongSinhVien = 0;
-        //     this->sv = list<Sinhvien>();
-        // }
         string find(string name){
             bool ok = false;
-            for(auto i:sv){
-                if(i.getOnlyName() == name){
+            for(auto i:sinhviens){
+                if(i.getName() == name){
                     cout<<i;
                     ok = true;
                 }
@@ -42,7 +32,7 @@ class quanly{
         }
         string findM(string MSV){
             bool ok = false;
-            for(auto i:sv){
+            for(auto i:sinhviens){
                 if(i.getMsv() == MSV){
                     cout<<i;
                     ok = true;
@@ -52,23 +42,22 @@ class quanly{
             return "Khong tim thay\n";
         }
         Sinhvien* findM2(string MSV){
-            for(auto i=sv.begin();i!=sv.end();i++){
+            for(auto i=sinhviens.begin();i!=sinhviens.end();i++){
                 if(i->getMsv() == MSV){
                     return &(*i);
                 }
             }
             return NULL;
         }
-
-
         void pushSinhVien(Sinhvien sv){
-            this->sv.push_back(sv);
+            this->sinhviens.push_back(sv);
             soLuongSinhVien++;
         }
+
         void remove(string ma){
-            for(auto i=sv.begin();i!=sv.end();i++){
+            for(auto i=sinhviens.begin();i!=sinhviens.end();i++){
                 if(i->getMsv() == ma){
-                    sv.erase(i);
+                    sinhviens.erase(i);
                     soLuongSinhVien--;
                     return;
                 }
@@ -76,40 +65,108 @@ class quanly{
         }
 
 
+        void addFromFile(){
+            string path;
+            cout<<"Nhap duong dan file: ";
+            cin.ignore();
+            getline(cin, path);
+            ifstream filein(path);
+            if(filein.fail()){
+                cout<<"Khong the mo file"<<endl;
+                return;
+            }
+            while(!filein.eof()){
+                string name, birth, msv, lop;
+                int sex;
+                getline(filein, name);
+                getline(filein, birth);
+                getline(filein, msv);
+                filein >> sex;
+                filein.ignore();
+                getline(filein, lop);
+                Sinhvien sv(name, msv, birth, sex, lop);
+                pushSinhVien(sv);
+            }
+            filein.close();
+            cout<<"Them sinh vien thanh cong"<<endl;
+        }
+        void writeFile(){
+            string path;
+            cout<<"Nhap duong dan file: ";
+            cin.ignore();
+            getline(cin, path);
+            ofstream fileout(path);
+            if(fileout.fail()){
+                cout<<"Khong the mo file"<<endl;
+                return;
+            }
+            fileout << "So luong sinh vien: " << soLuongSinhVien << endl;
+            fileout <<setfill('-')<<setw(140)<<"-"<<endl;
+            fileout<<setfill(' ');
+            fileout << left << setw(10) << "STT" 
+                << setw(30) << "Name"
+                << setw(30) << "Msv"
+                << setw(30) << "Birth"
+                << setw(30) << "Gioi tinh" 
+                << setw(30) << "Lop" << endl;
+            fileout << setfill('-') << setw(140) << "-" << endl;
+            fileout << setfill(' ');
+            int stt = 1;
+            for (auto i : sinhviens) {
+                fileout << left << setw(10) << stt++
+                << setw(30) << i.getName()
+                << setw(30) << i.getMsv()
+                << setw(30) << i.getBirth()
+                << setw(30) << i.getSex()
+                << setw(30) << i.getLop()<< endl;
+            }
+            fileout << setfill('-') << setw(140) << "-" << endl;
+            fileout.close();
+            cout<<"Ghi file thanh cong"<<endl;
+        }
+
+        Sinhvien& operator[](int i){
+            int j = 0;
+            for(auto it = sinhviens.begin();it!=sinhviens.end();it++){
+                if(j == i){
+                    return *it;
+                }
+                j++;
+            }
+        }
         friend istream& operator>>(istream &is, quanly &p){
             //is.ignore('\n' - 1e9);
-            getline(is,p.name);
             is>>p.soLuongSinhVien;
             return is;
         }
         friend ostream& operator<<(ostream &os, quanly &p) {
-            os << "Name: " << p.name << endl;
             os << "So luong sinh vien: " << p.soLuongSinhVien << endl;
-            os <<setfill('-')<<setw(130)<<"-"<<endl;
+            os <<setfill('-')<<setw(140)<<"-"<<endl;
             os<<setfill(' ');
-            os << left << setw(30) << "Name"
-            << setw(30) << "Birth"
-            << setw(30) << "Msv"
-            << setw(30) << "Lop" 
-            << setw(30) << "Diem" << endl;
-            os << setfill('-') << setw(130) << "-" << endl;
+            os << left << setw(10) << "STT" 
+                << setw(30) << "Name"
+                << setw(30) << "Msv"
+                << setw(30) << "Birth"
+                << setw(30) << "Gioi tinh" 
+                << setw(30) << "Lop" << endl;
+            os << setfill('-') << setw(140) << "-" << endl;
             os << setfill(' ');
-            for (auto i : p.sv) {
-                os << left << setw(30) << i.getName()
-                << setw(30) << i.getBirth()
+            int stt = 1;
+            for (auto i : p.sinhviens) {
+                os << left << setw(10) << stt++
+                << setw(30) << i.getName()
                 << setw(30) << i.getMsv()
-                << setw(30) << i.getLop()
-                << setw(30) << i.getDiem() << endl;
+                << setw(30) << i.getBirth()
+                << setw(30) << i.getSex()
+                << setw(30) << i.getLop()<< endl;
             }
-            os << setfill('-') << setw(130) << "-" << endl;
+            os << setfill('-') << setw(140) << "-" << endl;
             return os;
         }
+
+
         void sortSinhvienAZ() {
-            sv.sort(cmpName);
+            sinhviens.sort(cmpName);
         }
-        void sortSinhvienDiem() {
-            sv.sort(cmpDiem);
-        }
-    
 };
 #endif

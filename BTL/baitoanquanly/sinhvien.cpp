@@ -9,15 +9,15 @@ class Sinhvien{
         string name;
         string birth;
         string msv;
-        double diem;
+        int sex;//1 la nam, 0 la nu
         string lop;
     public:
-        Sinhvien(string name, string birth, string msv, string lop, float diem){
+        Sinhvien(string name,string msv, string birth, int sex, string lop ){
             this->name = name;
             this->birth = birth;
             this->msv = msv;
             this->lop = lop;
-            this->diem = diem;
+            this->sex = sex;
         }
         //getter va setter
         void setName(string name){
@@ -32,8 +32,8 @@ class Sinhvien{
         void setLop(string lop){
             this->lop = lop;
         }
-        void setDiem(double diem){
-            this->diem = diem;
+        void setSex(int sex){
+            this->sex = sex;
         }
         string getName(){
             return this->name;
@@ -55,8 +55,8 @@ class Sinhvien{
         string getLop(){
             return this->lop;
         }
-        double getDiem(){
-            return this->diem;
+        int getSex(){
+            return sex;
         }
         //-------------------------------------
         Sinhvien(){
@@ -64,60 +64,42 @@ class Sinhvien{
             this->birth = "";
             this->msv = "";
             this->lop = "";
-            this->diem = 0;
+            this->sex = -1;
         }
-        void inputfile(string f){
-            ifstream filein(f);
-            if(filein.fail()){
-                cout<<"Khong the mo file"<<endl;
-                return;
-            }
-            while(!filein.eof()){
-                getline(filein,name);
-                filein>>birth;
-                filein.ignore();
-                getline(filein,msv);
-                getline(filein,lop);
-                Sinhvien sv(name,birth,msv,lop,diem);
-            }
-            filein.close();
-        }
-        
+
         friend istream& operator>>(istream &is, Sinhvien &sv){
             cout<<"Nhap ten: ";
             is.ignore();
             getline(is,sv.name);
-            cout<<"Nhap ngay sinh: ";
-            getline(is,sv.birth);
             cout<<"Nhap msv: ";
             is>>sv.msv;
+            cout<<"Nhap ngay sinh: ";
+            is.ignore();
+            getline(is,sv.birth);
+            cout<<"Nhap gioi tinh(1 la nam, 0 la nu): ";
+            is>>sv.sex;
             cout<<"Nhap lop: ";
             is.ignore();
             getline(is,sv.lop);
-            cout<<"Nhap diem: ";
-            is>>sv.diem;
             return is;
         }
         friend ostream& operator<<(ostream &os, Sinhvien &sv){
             os<<"Name: "<<sv.name<<endl;
-            os<<"Birth: "<<sv.birth<<endl;
             os<<"Msv: "<<sv.msv<<endl;
+            os<<"Birth: "<<sv.birth<<endl;
+            os<<"Gioi tinh: "<<sv.sex<<endl;
             os<<"Lop: "<<sv.lop<<endl;
-            os<<"Diem: "<<sv.diem<<endl;
             return os;
-        }
-        bool operator==(Sinhvien &sv){
-            return this->name == sv.name && this->birth == sv.birth && this->msv == sv.msv && this->lop == sv.lop;
         }
         bool operator<(Sinhvien &sv){
             return this->name < sv.name;
         }
         void show(){
-            cout<< left <<setw(10)<<"Name: "<<this->name<<endl;
-            cout<< left <<setw(10)<<"Birth: "<<this->birth<<endl;
-            cout<< left <<setw(10)<<"Msv: "<<this->msv<<endl;
+            cout<< left <<setw(10)<<"Ho ten: "<<this->name<<endl;
+            cout<< left <<setw(10)<<"Ma sinh vien: "<<this->msv<<endl;
+            cout<< left <<setw(10)<<"Ngay sinh: "<<this->birth<<endl;
+            cout<< left <<setw(10)<<"Gioi tinh: "<<this->sex<<endl;
             cout<< left <<setw(10)<<"Lop: "<<this->lop<<endl;
-            cout<< left <<setw(10)<<"Diem: "<<fix_(2)<<this->diem<<endl;
         }
 };
 #endif

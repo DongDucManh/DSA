@@ -9,38 +9,38 @@ class quanlyAPP{
     private:
         quanly p;
     public:
-        string menu();
+        string choose();
         void run();
         void addSinhVien();
         void addSinhVienFromFile();
         void findSinhVienName();
-        void findSinhVienM();
+        void writeToFile();
         void removeSinhVien();
         void ListSinhvien();
-        void replaceSinhVien();
-        void hienthi(){
+        // sua doi thong tin sinh vien
+        void modifySinhVien();
+        void menu(){
             cout<<"1. Them sinh vien tu ban phim"<<endl;
             cout<<"2. Them sinh vien tu file"<<endl;
-            cout<<"3. Sap xep sinh vien theo ten"<<endl;
-            cout<<"4. Sap xep sinh vien theo diem"<<endl;
-            cout<<"5. Xoa sinh vien voi ma sinh vien"<<endl;
-            cout<<"6. Hien thi thong tin lop"<<endl;
-            cout<<"7. Thay the sinh vien voi ma sinh vien"<<endl;
-            cout<<"8. Tim sinh vien theo ma sinh vien"<<endl;
-            cout<<"9. Tim sinh vien theo ten"<<endl;
-            cout<<"10. Lam sach man hinh"<<endl;
-            cout<<"11. Hien thi menu"<<endl;
-            cout<<"12. Thoat"<<endl;
+            cout<<"3. Ghi ra file"<<endl;
+            cout<<"4. Sap xep sinh vien theo ten"<<endl;
+            cout<<"5. Hien thi danh sach sinh vien"<<endl;
+            cout<<"6. Xoa sinh vien voi ma sinh vien"<<endl;
+            cout<<"7. Sua doi thong tin sinh vien"<<endl;
+            cout<<"8. Tim sinh vien theo ten"<<endl;
+            cout<<"9. Lam sach man hinh"<<endl;
+            cout<<"10. Hien thi menu"<<endl;
+            cout<<"11. Thoat"<<endl;
         }   
 };
 
-string quanlyAPP::menu(){
+string quanlyAPP::choose(){
     string c;
     while (1)
     {
+        cout<<"Nhap lua chon: ";
         cin>>c;
-        if(c>="1" && c<="9") return c;
-        system("cls");
+        if(c>="1" && c<="11") return c;
         cout<<"Lua chon khong hop le, vui long nhap lai!!!!"<<endl;
     }
     
@@ -48,29 +48,27 @@ string quanlyAPP::menu(){
 void quanlyAPP::run(){
     system("cls");
     p.sortSinhvienAZ();
-    hienthi();
+    menu();
     while(1){
-        cout<<"Nhap lua chon: ";
-        string c = menu();
+        string c = choose();
         if (c == "1") addSinhVien();
         elif (c == "2") addSinhVienFromFile();
-        elif (c == "3") p.sortSinhvienAZ();
-        elif (c == "4") p.sortSinhvienDiem();
-        elif (c == "5") removeSinhVien();
-        elif (c == "6") ListSinhvien();
-        elif (c == "7") replaceSinhVien();
-        elif (c == "8") findSinhVienM();
-        elif (c == "9") findSinhVienName();
-        elif (c == "10") {
+        elif (c == "3") writeToFile();
+        elif (c == "4") p.sortSinhvienAZ();
+        elif (c == "5") ListSinhvien();
+        elif (c == "6") removeSinhVien();
+        elif (c == "7") modifySinhVien();
+        elif (c == "8") findSinhVienName();
+        elif (c == "9") {
             system("cls");
-            hienthi();
+            menu();
+            continue;
+        }
+        elif (c == "10") {
+            menu();
             continue;
         }
         elif (c == "11") {
-            hienthi();
-            continue;
-        }
-        elif (c == "12") {
             cout<<"Cam on ban da su dung chuong trinh"<<endl;
             break;
         }
@@ -83,45 +81,20 @@ void quanlyAPP::addSinhVien(){
     p.pushSinhVien(sv);
 }
 void quanlyAPP::addSinhVienFromFile(){
-    string path;
-    cout<<"Nhap duong dan file: ";
-    cin.ignore();
-    getline(cin,path);
-    ifstream filein(path);
-    if(filein.fail()){
-        cout<<"Khong the mo file"<<endl;
-        return;
-    }
-    while(!filein.eof()){
-        string name,birth,msv,lop;
-        double diem;
-        getline(filein,name);
-        getline(filein,birth);
-        getline(filein,msv);
-        getline(filein,lop);
-        filein>>diem;
-        Sinhvien sv(name,birth,msv,lop,diem);
-        p.pushSinhVien(sv);
-        filein.ignore();
-    }
-    filein.close();
-    cout<<"Them sinh vien thanh cong"<<endl;
+    p.addFromFile();
 }
 void quanlyAPP:: ListSinhvien(){
     cout<<p;
 }
 void quanlyAPP::findSinhVienName(){
     string name;
-    cout<<"Nhap ten sinh vien can tim: ";
+    cout<<"Nhap ho va ten sinh vien can tim: ";
     cin.ignore();
     getline(cin,name);
     cout<<p.find(name);
 }
-void quanlyAPP:: findSinhVienM(){
-    string msv;
-    cout<<"Nhap msv can tim: ";
-    cin>>msv;
-    cout<<p.findM(msv);
+void quanlyAPP:: writeToFile(){
+    p.writeFile();
 }
 void quanlyAPP::removeSinhVien(){
     string msv;
@@ -131,20 +104,41 @@ void quanlyAPP::removeSinhVien(){
     getline(cin,msv);
     p.remove(msv);
 }
-void quanlyAPP::replaceSinhVien(){
+void quanlyAPP::modifySinhVien(){
     ListSinhvien();
-    string msv;
-    cout<<"Nhap ma sinh vien can thay the: ";
-    cin>>msv;
-    Sinhvien *tmp = p.findM2(msv);
-    if (tmp == NULL){
+    int n;
+    cout<<"Chon sinh vien can sua: ";
+    cin>>n;
+    if(n<0 || n>p.getSoLuongSinhVien()){
         cout<<"Khong tim thay sinh vien"<<endl;
         return;
     }
-    cout<<"Nhap thong tin sinh vien moi:\n"<<endl;
-    Sinhvien sv;
-    cin>>sv;
-    *tmp = sv;
-    cout<<"Thay the sinh vien thanh cong"<<endl;
+    for (int i = 0; i < p.getSoLuongSinhVien(); i++)
+    {
+        if(i == n-1){
+            cout<<"Nhap thong tin moi( nhap -1 voi thong tin khong thay doi): "<<endl;
+            string name,birth,msv,lop;
+            int sex;
+            cout<<"Nhap ten: ";
+            cin.ignore();
+            getline(cin,name);
+            cout<<"Nhap msv: ";
+            getline(cin,msv);
+            cout<<"Nhap ngay sinh: ";
+            getline(cin,birth);
+            cout<<"Nhap gioi tinh(0: Nam, 1: Nu): ";
+            cin>>sex;
+            cout<<"Nhap lop: ";
+            cin.ignore();
+            getline(cin,lop);
+
+            if(name != "-1") p[i].setName(name);
+            if(msv != "-1") p[i].setMsv(msv);
+            if(birth != "-1") p[i].setBirth(birth);
+            if (sex != -1) p[i].setSex(sex);
+            if(lop != "-1") p[i].setLop(lop);
+            return;
+        }
+    }
 }
 #endif

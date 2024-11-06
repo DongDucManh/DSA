@@ -1,5 +1,5 @@
 #include "appKTX.cpp"
-main(){
+signed main(){
     quanlyAPP app;
     app.run();
 }
