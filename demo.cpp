@@ -16,5 +16,5 @@ main(){
     vector<int> a(n),b(m);
     for (auto &i: a) cin>>i;
     for (auto &i: b) cin>>i;
-    
+    int adsamdkamsd;
 }

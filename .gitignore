@@ -17,7 +17,7 @@ bin/
 *.userprefs
 *.tlog
 *.vscode/
-
+*.cph/
 # Thư mục chứa thư viện
 lib/
 
