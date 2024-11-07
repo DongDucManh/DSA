@@ -9,7 +9,7 @@ class quanlyAPP{
     private:
         quanly p;
     public:
-        string choose();
+        int choose();
         void run();
         void addSinhVien();
         void addSinhVienFromFile();
@@ -34,13 +34,13 @@ class quanlyAPP{
         }   
 };
 
-string quanlyAPP::choose(){
-    string c;
+int quanlyAPP::choose(){
+    int c;
     while (1)
     {
         cout<<"Nhap lua chon: ";
         cin>>c;
-        if(c>="1" && c<="11") return c;
+        if(c>=1 && c<=11) return c;
         cout<<"Lua chon khong hop le, vui long nhap lai!!!!"<<endl;
     }
     
@@ -50,25 +50,25 @@ void quanlyAPP::run(){
     p.sortSinhvienAZ();
     menu();
     while(1){
-        string c = choose();
-        if (c == "1") addSinhVien();
-        elif (c == "2") addSinhVienFromFile();
-        elif (c == "3") writeToFile();
-        elif (c == "4") p.sortSinhvienAZ();
-        elif (c == "5") ListSinhvien();
-        elif (c == "6") removeSinhVien();
-        elif (c == "7") modifySinhVien();
-        elif (c == "8") findSinhVienName();
-        elif (c == "9") {
+        int c = choose();
+        if (c == 1) addSinhVien();
+        elif (c == 2) addSinhVienFromFile();
+        elif (c == 3) writeToFile();
+        elif (c == 4) p.sortSinhvienAZ();
+        elif (c == 5) ListSinhvien();
+        elif (c == 6) removeSinhVien();
+        elif (c == 7) modifySinhVien();
+        elif (c == 8) findSinhVienName();
+        elif (c == 9) {
             system("cls");
             menu();
             continue;
         }
-        elif (c == "10") {
+        elif (c == 10) {
             menu();
             continue;
         }
-        elif (c == "11") {
+        elif (c == 11) {
             cout<<"Cam on ban da su dung chuong trinh"<<endl;
             break;
         }

@@ -22,6 +22,5 @@ int main() {
     } else {
         cout << "Khong co duong di giua " << s << " va " << f << endl;
     }
-
     return 0;
 }

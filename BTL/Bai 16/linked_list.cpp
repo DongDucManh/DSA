@@ -11,13 +11,30 @@ class slist{
         node<T>* trail;
         int len;
     public:
-        slist():head(NULL), trail(NULL), len(T()){}
-        slist(T val):head(new node<T>(val)), trail(head), len(1){}
+        slist():head(NULL), trail(NULL), len(0){}
+        slist(T n){
+            len = n;
+            head = new node<T>();
+            node<T>* tmp = head;
+            for(int i = 1; i < n; i++){
+                tmp->setNext(new node<T>());
+                tmp = tmp->getNext();
+            }
+            trail = tmp;
+        }
         class iterator{
             private:
                 node<T>* curr;
             public:
                 iterator(node<T>* p): curr(p){}
+                iterator(): curr(NULL){}
+                iterator (const iterator& it){
+                    curr = it.curr;
+                }
+                iterator& operator=(const iterator& it){
+                    curr = it.curr;
+                    return *this;
+                }
                 bool operator==( iterator b){
                     return curr == b.curr;
                 }
@@ -90,27 +107,47 @@ class slist{
             }
             len--;
         }
-        void insert(iterator pos, T val){
-            if(pos == NULL) return;
-            if(pos == head){
+        void insert(int pos, T val){
+            if (pos < 0 || pos > len) return;
+            if (len==0) {
+                push_back(val);
+                return;
+            }
+            if (pos == 0) {
                 push_front(val);
                 return;
             }
+            if (pos == len) {
+                push_back(val);
+                return;
+            }
             node<T>* tmp = head;
-            while(tmp->getNext() != pos.curr) tmp = tmp->getNext();
-            tmp->setNext(new node<T>(val, pos.curr));
+            for (int i = 0; i < pos-1; i++)
+            {
+                tmp = tmp->getNext();
+            }
+            tmp->setNext(new node<T>(val, tmp->getNext()));
             len++;
         }
-        void erase(iterator pos){
-            if(pos == NULL) return;
-            if(pos == head){
+        void erase(int pos){
+            if (pos < 0 || pos >= len) return;
+            if (len == 0) return;
+            if (len == 1){
+                pop_back();
+                return;
+            }
+            if (pos == 0){
                 pop_front();
                 return;
             }
             node<T>* tmp = head;
-            while(tmp->getNext() != pos.curr) tmp = tmp->getNext();
-            tmp->setNext(pos.curr->getNext());
-            delete pos.curr;
+            for (int i = 0; i < pos-1; i++)
+            {
+                tmp = tmp->getNext();
+            }
+            node<T>* tmp2 = tmp->getNext();
+            tmp->setNext(tmp2->getNext());
+            delete tmp2;
             len--;
         }
 

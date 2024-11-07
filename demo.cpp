@@ -11,12 +11,10 @@ using namespace __gnu_pbds;
 //#define ordered_multiset tree<int, null_type,less_equal<int>, rb_tree_tag,tree_order_statistics_node_update>
 main(){
     cin.tie(0)->sync_with_stdio(0);
-    map<string,int> m;
-    string s,s1;
-    getline(cin,s);
-    m[s]+=1;
-    cin>>s1;
-    m[s1]+=1;
-    cout<<m[s1];
-    return 0;
+    int n,m;
+    cin>>n>>m;
+    vector<int> a(n),b(m);
+    for (auto &i: a) cin>>i;
+    for (auto &i: b) cin>>i;
+    
 }
