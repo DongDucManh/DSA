@@ -27,7 +27,6 @@ lib/
 # Tệp tạm thời
 *.tmp
 *.temp
-
 # Tệp hệ thống
 .DS_Store
 Thumbs.db

@@ -117,7 +117,7 @@ class quanly{
                 << setw(30) << i.getName()
                 << setw(30) << i.getMsv()
                 << setw(30) << i.getBirth()
-                << setw(30) << i.getSex()
+                << setw(30) << (i.getSex()==1?"Nam":"Nu")
                 << setw(30) << i.getLop()<< endl;
             }
             fileout << setfill('-') << setw(140) << "-" << endl;
@@ -157,7 +157,7 @@ class quanly{
                 << setw(30) << i.getName()
                 << setw(30) << i.getMsv()
                 << setw(30) << i.getBirth()
-                << setw(30) << i.getSex()
+                << setw(30) << (i.getSex()==1?"Nam":"Nu")
                 << setw(30) << i.getLop()<< endl;
             }
             os << setfill('-') << setw(140) << "-" << endl;
