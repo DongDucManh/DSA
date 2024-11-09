@@ -11,6 +11,10 @@ class quanly{
     private:
         int soLuongSinhVien;
         list<Sinhvien> sinhviens;
+        string lower(string s){
+            transform(s.begin(), s.end(), s.begin(), ::tolower);
+            return s;
+        }
     public:
         quanly( int soLuongSinhVien=0, list<Sinhvien> sv = list<Sinhvien>()){
             this->soLuongSinhVien = soLuongSinhVien;
@@ -21,8 +25,9 @@ class quanly{
         }
         string find(string name){
             bool ok = false;
+            name = lower(name);
             for(auto i:sinhviens){
-                if(i.getName() == name){
+                if(lower(i.getName()) == name){
                     cout<<i;
                     ok = true;
                 }
@@ -64,7 +69,43 @@ class quanly{
             }
         }
 
+        void modify(){
+            int n;
+            cout<<"Chon sinh vien can sua: ";
+            cin>>n;
+            if(n<0 || n>soLuongSinhVien){
+                cout<<"Khong tim thay sinh vien"<<endl;
+                return;
+            }
+            list<Sinhvien>::iterator x = sinhviens.begin();
+            for (int i = 0; i < getSoLuongSinhVien(); i++, x++)
+            {
+                if(i == n-1){
+                    cout<<"Nhap thong tin moi( nhap -1 voi thong tin khong thay doi): "<<endl;
+                    string name,birth,msv,lop;
+                    int sex;
+                    cout<<"Nhap ho ten: ";
+                    cin.ignore();
+                    getline(cin,name);
+                    cout<<"Nhap msv: ";
+                    getline(cin,msv);
+                    cout<<"Nhap ngay sinh: ";
+                    getline(cin,birth);
+                    cout<<"Nhap gioi tinh(1: Nam, 0: Nu): ";
+                    cin>>sex;
+                    cout<<"Nhap lop: ";
+                    cin.ignore();
+                    getline(cin,lop);
 
+                    if(name != "-1") (*x).setName(name);
+                    if(msv != "-1") (*x).setMsv(msv);
+                    if(birth != "-1") (*x).setBirthday(birth);
+                    if (sex != -1) (*x).setSex(sex);
+                    if(lop != "-1") (*x).setLop(lop);
+                    return;
+                }
+    }
+        }
         void addFromFile(){
             string path;
             cout<<"Nhap duong dan file: ";
@@ -100,27 +141,7 @@ class quanly{
                 cout<<"Khong the mo file"<<endl;
                 return;
             }
-            fileout << "So luong sinh vien: " << soLuongSinhVien << endl;
-            fileout <<setfill('-')<<setw(140)<<"-"<<endl;
-            fileout<<setfill(' ');
-            fileout << left << setw(10) << "STT" 
-                << setw(30) << "Name"
-                << setw(30) << "Msv"
-                << setw(30) << "Birth"
-                << setw(30) << "Gioi tinh" 
-                << setw(30) << "Lop" << endl;
-            fileout << setfill('-') << setw(140) << "-" << endl;
-            fileout << setfill(' ');
-            int stt = 1;
-            for (auto i : sinhviens) {
-                fileout << left << setw(10) << stt++
-                << setw(30) << i.getName()
-                << setw(30) << i.getMsv()
-                << setw(30) << i.getBirth()
-                << setw(30) << (i.getSex()==1?"Nam":"Nu")
-                << setw(30) << i.getLop()<< endl;
-            }
-            fileout << setfill('-') << setw(140) << "-" << endl;
+            fileout << *this;
             fileout.close();
             cout<<"Ghi file thanh cong"<<endl;
         }
@@ -156,15 +177,13 @@ class quanly{
                 os << left << setw(10) << stt++
                 << setw(30) << i.getName()
                 << setw(30) << i.getMsv()
-                << setw(30) << i.getBirth()
+                << setw(30) << i.getBirthday()
                 << setw(30) << (i.getSex()==1?"Nam":"Nu")
                 << setw(30) << i.getLop()<< endl;
             }
             os << setfill('-') << setw(140) << "-" << endl;
             return os;
         }
-
-
         void sortSinhvienAZ() {
             sinhviens.sort(cmpName);
         }

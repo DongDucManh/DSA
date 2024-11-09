@@ -106,39 +106,6 @@ void quanlyAPP::removeSinhVien(){
 }
 void quanlyAPP::modifySinhVien(){
     ListSinhvien();
-    int n;
-    cout<<"Chon sinh vien can sua: ";
-    cin>>n;
-    if(n<0 || n>p.getSoLuongSinhVien()){
-        cout<<"Khong tim thay sinh vien"<<endl;
-        return;
-    }
-    for (int i = 0; i < p.getSoLuongSinhVien(); i++)
-    {
-        if(i == n-1){
-            cout<<"Nhap thong tin moi( nhap -1 voi thong tin khong thay doi): "<<endl;
-            string name,birth,msv,lop;
-            int sex;
-            cout<<"Nhap ten: ";
-            cin.ignore();
-            getline(cin,name);
-            cout<<"Nhap msv: ";
-            getline(cin,msv);
-            cout<<"Nhap ngay sinh: ";
-            getline(cin,birth);
-            cout<<"Nhap gioi tinh(0: Nam, 1: Nu): ";
-            cin>>sex;
-            cout<<"Nhap lop: ";
-            cin.ignore();
-            getline(cin,lop);
-
-            if(name != "-1") p[i].setName(name);
-            if(msv != "-1") p[i].setMsv(msv);
-            if(birth != "-1") p[i].setBirth(birth);
-            if (sex != -1) p[i].setSex(sex);
-            if(lop != "-1") p[i].setLop(lop);
-            return;
-        }
-    }
+    p.modify();
 }
 #endif

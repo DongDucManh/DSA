@@ -7,14 +7,14 @@ using namespace std;
 class Sinhvien{
     private:
         string name;
-        string birth;
+        string birthday;
         string msv;
         int sex;//1 la nam, 0 la nu
         string lop;
     public:
-        Sinhvien(string name,string msv, string birth, int sex, string lop ){
+        Sinhvien(string name,string msv, string birthday, int sex, string lop ){
             this->name = name;
-            this->birth = birth;
+            this->birthday = birthday;
             this->msv = msv;
             this->lop = lop;
             this->sex = sex;
@@ -23,8 +23,8 @@ class Sinhvien{
         void setName(string name){
             this->name = name;
         }
-        void setBirth(string birth){
-            this->birth = birth;
+        void setBirthday(string birthday){
+            this->birthday = birthday;
         }
         void setMsv(string msv){
             this->msv = msv;
@@ -46,8 +46,8 @@ class Sinhvien{
             }
             return tmp;
         }
-        string getBirth(){
-            return this->birth;
+        string getBirthday(){
+            return this->birthday;
         }
         string getMsv(){
             return this->msv;
@@ -61,7 +61,7 @@ class Sinhvien{
         //-------------------------------------
         Sinhvien(){
             this->name = "";
-            this->birth = "";
+            this->birthday = "";
             this->msv = "";
             this->lop = "";
             this->sex = -1;
@@ -75,7 +75,7 @@ class Sinhvien{
             is>>sv.msv;
             cout<<"Nhap ngay sinh: ";
             is.ignore();
-            getline(is,sv.birth);
+            getline(is,sv.birthday);
             cout<<"Nhap gioi tinh(1 la nam, 0 la nu): ";
             is>>sv.sex;
             cout<<"Nhap lop: ";
@@ -84,9 +84,9 @@ class Sinhvien{
             return is;
         }
         friend ostream& operator<<(ostream &os, Sinhvien &sv){
-            os<<"Name: "<<sv.name<<endl;
+            os<<"Ho ten: "<<sv.name<<endl;
             os<<"Msv: "<<sv.msv<<endl;
-            os<<"Birth: "<<sv.birth<<endl;
+            os<<"Ngay sinh: "<<sv.birthday<<endl;
             os<<"Gioi tinh: "<<sv.sex<<endl;
             os<<"Lop: "<<sv.lop<<endl;
             return os;
@@ -97,7 +97,7 @@ class Sinhvien{
         void show(){
             cout<< left <<setw(10)<<"Ho ten: "<<this->name<<endl;
             cout<< left <<setw(10)<<"Ma sinh vien: "<<this->msv<<endl;
-            cout<< left <<setw(10)<<"Ngay sinh: "<<this->birth<<endl;
+            cout<< left <<setw(10)<<"Ngay sinh: "<<this->birthday<<endl;
             cout<< left <<setw(10)<<"Gioi tinh: "<<this->sex<<endl;
             cout<< left <<setw(10)<<"Lop: "<<this->lop<<endl;
         }

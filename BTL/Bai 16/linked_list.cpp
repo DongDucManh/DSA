@@ -150,6 +150,25 @@ class slist{
             delete tmp2;
             len--;
         }
+        void clear(){
+            while(len > 0) pop_back();
+        }
+        ~slist(){
+            clear();
+        }
+        void sort(){
+            for (node<T>* i = head; i != NULL; i = i->getNext())
+            {
+                for (node<T>* j = i->getNext(); j != NULL; j = j->getNext())
+                {
+                    if (i->getElem() > j->getElem()) {
+                        T tmp = i->getElem();
+                        i->setElem(j->getElem());
+                        j->setElem(tmp);
+                    }
+                }
+            }
+        }
 
 };
 #endif
