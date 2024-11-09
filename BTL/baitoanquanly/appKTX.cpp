@@ -2,6 +2,7 @@
 #define APPKTX_CPP
 #include "QUANLY.cpp"
 #include <bits/stdc++.h>
+#include <windows.h>
 using namespace std;
 #define elif else if
 #define endl "\n"
@@ -69,16 +70,17 @@ void quanlyAPP::run(){
             continue;
         }
         elif (c == 11) {
+            set_color(FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
             cout<<"Cam on ban da su dung chuong trinh"<<endl;
+            set_color(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+            system("pause");
             break;
         }
         
     }
 }
 void quanlyAPP::addSinhVien(){
-    Sinhvien sv;
-    cin>>sv;
-    p.pushSinhVien(sv);
+    p.pushSinhVien();
 }
 void quanlyAPP::addSinhVienFromFile(){
     p.addFromFile();

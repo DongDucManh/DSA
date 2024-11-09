@@ -1,27 +1,30 @@
 #ifndef QUANLY_CPP
 #define QUANLY_CPP
 #include <bits/stdc++.h>
+#include <windows.h>
 #include "Sinhvien.cpp"
 using namespace std;
 #define elif else if
+void set_color(int color) {
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, color);
+}
 int cmpName(Sinhvien a, Sinhvien b){
     return a.getOnlyName() < b.getOnlyName();
 }
 class quanly{
     private:
-        int soLuongSinhVien;
         list<Sinhvien> sinhviens;
         string lower(string s){
             transform(s.begin(), s.end(), s.begin(), ::tolower);
             return s;
         }
     public:
-        quanly( int soLuongSinhVien=0, list<Sinhvien> sv = list<Sinhvien>()){
-            this->soLuongSinhVien = soLuongSinhVien;
+        quanly(list<Sinhvien> sv = list<Sinhvien>()){
             this->sinhviens = sv;
         }
         int getSoLuongSinhVien(){
-            return this->soLuongSinhVien;
+            return this->sinhviens.size();
         }
         string find(string name){
             bool ok = false;
@@ -35,35 +38,21 @@ class quanly{
             if(ok) return "";
             return "Khong tim thay\n";
         }
-        string findM(string MSV){
-            bool ok = false;
-            for(auto i:sinhviens){
-                if(i.getMsv() == MSV){
-                    cout<<i;
-                    ok = true;
-                }
+        void pushSinhVien(){
+            int n;
+            cout<<"Nhap so sinh vien muon them: ";
+            cin>>n;
+            for (int i=0;i<n;i++){
+                Sinhvien sv;
+                cin>>sv;
+                sinhviens.push_back(sv);
             }
-            if(ok) return "";
-            return "Khong tim thay\n";
-        }
-        Sinhvien* findM2(string MSV){
-            for(auto i=sinhviens.begin();i!=sinhviens.end();i++){
-                if(i->getMsv() == MSV){
-                    return &(*i);
-                }
-            }
-            return NULL;
-        }
-        void pushSinhVien(Sinhvien sv){
-            this->sinhviens.push_back(sv);
-            soLuongSinhVien++;
         }
 
         void remove(string ma){
             for(auto i=sinhviens.begin();i!=sinhviens.end();i++){
                 if(i->getMsv() == ma){
                     sinhviens.erase(i);
-                    soLuongSinhVien--;
                     return;
                 }
             }
@@ -73,7 +62,7 @@ class quanly{
             int n;
             cout<<"Chon sinh vien can sua: ";
             cin>>n;
-            if(n<0 || n>soLuongSinhVien){
+            if(n<0 || n>sinhviens.size()){
                 cout<<"Khong tim thay sinh vien"<<endl;
                 return;
             }
@@ -126,7 +115,7 @@ class quanly{
                 filein.ignore();
                 getline(filein, lop);
                 Sinhvien sv(name, msv, birth, sex, lop);
-                pushSinhVien(sv);
+                sinhviens.push_back(sv);
             }
             filein.close();
             cout<<"Them sinh vien thanh cong"<<endl;
@@ -145,23 +134,11 @@ class quanly{
             fileout.close();
             cout<<"Ghi file thanh cong"<<endl;
         }
-
-        Sinhvien& operator[](int i){
-            int j = 0;
-            for(auto it = sinhviens.begin();it!=sinhviens.end();it++){
-                if(j == i){
-                    return *it;
-                }
-                j++;
-            }
-        }
-        friend istream& operator>>(istream &is, quanly &p){
-            //is.ignore('\n' - 1e9);
-            is>>p.soLuongSinhVien;
-            return is;
-        }
         friend ostream& operator<<(ostream &os, quanly &p) {
-            os << "So luong sinh vien: " << p.soLuongSinhVien << endl;
+            os<<endl;
+            set_color(FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+            os << "So luong sinh vien: " << p.getSoLuongSinhVien() << endl;
+            os << "Danh sach sinh vien " << endl;
             os <<setfill('-')<<setw(140)<<"-"<<endl;
             os<<setfill(' ');
             os << left << setw(10) << "STT" 
@@ -182,6 +159,7 @@ class quanly{
                 << setw(30) << i.getLop()<< endl;
             }
             os << setfill('-') << setw(140) << "-" << endl;
+            set_color(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
             return os;
         }
         void sortSinhvienAZ() {
