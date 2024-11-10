@@ -2,13 +2,12 @@
 #define APPKTX_CPP
 #include "QUANLY.cpp"
 #include <bits/stdc++.h>
-#include <windows.h>
 using namespace std;
 #define elif else if
 #define endl "\n"
 class quanlyAPP{
     private:
-        quanly p;
+        Quanly p;
     public:
         int choose();
         void run();
@@ -39,8 +38,16 @@ int quanlyAPP::choose(){
     int c;
     while (1)
     {
-        cout<<"Nhap lua chon: ";
+        cout<<"Nhap lua chon( neu khong nho nhap 10 de hien menu): ";
         cin>>c;
+        if(cin.fail()){
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            set_color(FOREGROUND_RED | FOREGROUND_INTENSITY);
+            cout<<"\nDau vao khong hop le, vui long nhap lai!!!!"<<endl;
+            set_color(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+            continue;
+        }
         if(c>=1 && c<=11) return c;
         cout<<"Lua chon khong hop le, vui long nhap lai!!!!"<<endl;
     }
@@ -48,7 +55,6 @@ int quanlyAPP::choose(){
 }
 void quanlyAPP::run(){
     system("cls");
-    p.sortSinhvienAZ();
     menu();
     while(1){
         int c = choose();

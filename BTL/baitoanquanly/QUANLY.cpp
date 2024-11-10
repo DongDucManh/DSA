@@ -1,28 +1,20 @@
 #ifndef QUANLY_CPP
 #define QUANLY_CPP
 #include <bits/stdc++.h>
-#include <windows.h>
 #include "Sinhvien.cpp"
 using namespace std;
 #define elif else if
-void set_color(int color) {
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(hConsole, color);
-}
 int cmpName(Sinhvien a, Sinhvien b){
-    return a.getOnlyName() < b.getOnlyName();
+    return a < b;
 }
-class quanly{
+string lower(string s){
+    transform(s.begin(), s.end(), s.begin(), ::tolower);
+    return s;
+}
+class Quanly{
     private:
         list<Sinhvien> sinhviens;
-        string lower(string s){
-            transform(s.begin(), s.end(), s.begin(), ::tolower);
-            return s;
-        }
     public:
-        quanly(list<Sinhvien> sv = list<Sinhvien>()){
-            this->sinhviens = sv;
-        }
         int getSoLuongSinhVien(){
             return this->sinhviens.size();
         }
@@ -40,13 +32,24 @@ class quanly{
         }
         void pushSinhVien(){
             int n;
+            back:
+            set_color(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
             cout<<"Nhap so sinh vien muon them: ";
             cin>>n;
+            if(cin.fail()){
+                set_color(FOREGROUND_RED | FOREGROUND_INTENSITY);
+                cout<<"Nhap khong hop le"<<endl;
+                set_color(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                goto back;
+            }
             for (int i=0;i<n;i++){
                 Sinhvien sv;
                 cin>>sv;
                 sinhviens.push_back(sv);
             }
+            set_color(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
         }
 
         void remove(string ma){
@@ -60,8 +63,17 @@ class quanly{
 
         void modify(){
             int n;
+            back:
             cout<<"Chon sinh vien can sua: ";
             cin>>n;
+            if(cin.fail()){
+                set_color(FOREGROUND_RED | FOREGROUND_INTENSITY);
+                cout<<"Nhap khong hop le"<<endl;
+                set_color(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                goto back;
+            }
             if(n<0 || n>sinhviens.size()){
                 cout<<"Khong tim thay sinh vien"<<endl;
                 return;
@@ -93,7 +105,7 @@ class quanly{
                     if(lop != "-1") (*x).setLop(lop);
                     return;
                 }
-    }
+            }
         }
         void addFromFile(){
             string path;
@@ -134,7 +146,7 @@ class quanly{
             fileout.close();
             cout<<"Ghi file thanh cong"<<endl;
         }
-        friend ostream& operator<<(ostream &os, quanly &p) {
+        friend ostream& operator<<(ostream &os, Quanly &p) {
             os<<endl;
             set_color(FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
             os << "So luong sinh vien: " << p.getSoLuongSinhVien() << endl;
@@ -142,9 +154,9 @@ class quanly{
             os <<setfill('-')<<setw(140)<<"-"<<endl;
             os<<setfill(' ');
             os << left << setw(10) << "STT" 
-                << setw(30) << "Name"
+                << setw(30) << "Ho va ten"
                 << setw(30) << "Msv"
-                << setw(30) << "Birth"
+                << setw(30) << "Ngay sinh"
                 << setw(30) << "Gioi tinh" 
                 << setw(30) << "Lop" << endl;
             os << setfill('-') << setw(140) << "-" << endl;

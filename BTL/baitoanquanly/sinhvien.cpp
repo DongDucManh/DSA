@@ -1,7 +1,12 @@
 #ifndef SINHVIEN_CPP
 #define SINHVIEN_CPP
 #include <bits/stdc++.h>
+#include <windows.h>
 using namespace std;
+void set_color(int color) {
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, color);
+}
 #define elif else if
 #define fix_(x) setprecision(x)<<fixed
 class Sinhvien{
@@ -12,6 +17,13 @@ class Sinhvien{
         int sex;//1 la nam, 0 la nu
         string lop;
     public:
+        Sinhvien(){
+            this->name = "";
+            this->birthday = "";
+            this->msv = "";
+            this->lop = "";
+            this->sex = -1;
+        }
         Sinhvien(string name,string msv, string birthday, int sex, string lop ){
             this->name = name;
             this->birthday = birthday;
@@ -40,7 +52,9 @@ class Sinhvien{
         }
         string getOnlyName(){
             string tmp="";
-            for (int i = name.size()-1; i >= 0; i--){
+            int k = name.size()-1;
+            while (k>=0 && name[k] == ' ') k--;
+            for (int i = k; i >= 0; i--){
                 if (name[i] == ' ') break;
                 tmp = name[i] + tmp;
             }
@@ -59,14 +73,6 @@ class Sinhvien{
             return sex;
         }
         //-------------------------------------
-        Sinhvien(){
-            this->name = "";
-            this->birthday = "";
-            this->msv = "";
-            this->lop = "";
-            this->sex = -1;
-        }
-
         friend istream& operator>>(istream &is, Sinhvien &sv){
             cout<<"Nhap ten: ";
             is.ignore();
@@ -84,15 +90,17 @@ class Sinhvien{
             return is;
         }
         friend ostream& operator<<(ostream &os, Sinhvien &sv){
+            set_color(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
             os<<"Ho ten: "<<sv.name<<endl;
             os<<"Msv: "<<sv.msv<<endl;
             os<<"Ngay sinh: "<<sv.birthday<<endl;
             os<<"Gioi tinh: "<<sv.sex<<endl;
             os<<"Lop: "<<sv.lop<<endl;
+            set_color(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
             return os;
         }
         bool operator<(Sinhvien &sv){
-            return this->name < sv.name;
+            return this->getOnlyName() < sv.getOnlyName();
         }
         void show(){
             cout<< left <<setw(10)<<"Ho ten: "<<this->name<<endl;
