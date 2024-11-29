@@ -6,7 +6,7 @@ int main() {
     Graph<int> g;
     g.readFile("Mzeno.inp");
     g.writeFile("Mzeno.out");
-    cout<<"So thanh phan lien thong cua do thi: "<<g.sothanhphanlienthong()<<endl;
+    cout<<"So thanh phan lien thong cua do thi: "<<g.ConnectedComponent()<<endl;
     int s,f;
     cout<<"Nhap dinh bat dau va dinh ket thuc: ";
     cin >> s >> f;

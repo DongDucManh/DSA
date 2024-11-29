@@ -28,9 +28,6 @@ class Graph{
         ~Graph(){
             delete[] graph;
         }
-        Graph* operator&(){
-            return this;
-        }
         slist<data>& operator[](int i){
             return graph[i];
         }
@@ -70,7 +67,7 @@ class Graph{
             }
         }
         //Dem so thanh phan lien thong voi DFS
-        int sothanhphanlienthong(){
+        int ConnectedComponent(){
             bool *visited = new bool[vertices+1];
             for (int i = 1; i <= vertices; i++){
                 visited[i] = false;
