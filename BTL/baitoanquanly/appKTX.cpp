@@ -19,6 +19,7 @@ class quanlyAPP{
         void ListSinhvien();
         // sua doi thong tin sinh vien
         void modifySinhVien();
+        void showHocPhan();
         void menu(){
             cout<<"1. Them sinh vien tu ban phim"<<endl;
             cout<<"2. Them sinh vien tu file"<<endl;
@@ -31,6 +32,7 @@ class quanlyAPP{
             cout<<"9. Lam sach man hinh"<<endl;
             cout<<"10. Hien thi menu"<<endl;
             cout<<"11. Thoat"<<endl;
+            cout<<"12. Xem hoc phan cua sinh vien"<<endl;
         }   
 };
 
@@ -48,7 +50,7 @@ int quanlyAPP::choose(){
             set_color(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
             continue;
         }
-        if(c>=1 && c<=11) return c;
+        if(c>=1 && c<=12) return c;
         cout<<"Lua chon khong hop le, vui long nhap lai!!!!"<<endl;
     }
     
@@ -115,5 +117,12 @@ void quanlyAPP::removeSinhVien(){
 void quanlyAPP::modifySinhVien(){
     ListSinhvien();
     p.modify();
+}
+void quanlyAPP::showHocPhan(){
+    string name;
+    cout<<"Nhap ho va ten sinh vien can xem hoc phan: ";
+    cin.ignore();
+    getline(cin, name);
+    p.findhp(name);
 }
 #endif

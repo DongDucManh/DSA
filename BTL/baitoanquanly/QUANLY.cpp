@@ -17,9 +17,11 @@ class Quanly{
     public:
         int getSoLuongSinhVien();
         string find(string name);
+        string findhp(string name);
         void pushSinhVien();
         void remove(string ma);
         void modify();
+//        Sinhvien findhp(string name);
         void addFromFile();
         void writeFile();
         void sortSinhvienAZ();
@@ -54,6 +56,16 @@ class Quanly{
 };
 int Quanly::getSoLuongSinhVien(){
     return sinhviens.size();
+}
+string Quanly::findhp(string name){
+    name = lower(name);
+    for (auto i : sinhviens){
+        if (lower(i.getName()) == name){
+            i.showHocphan();
+            return "";
+        }
+    }
+    return "Khong tim thay\n";
 }
 string Quanly::find(string name){
     bool ok = false;
@@ -154,14 +166,23 @@ void Quanly::addFromFile(){
     }
     while(!filein.eof()){
         string name, birth, msv, lop;
-        int sex;
+        int sex,shp;
+        vector<pair<string,double>> hocphan;
         getline(filein, name);
         getline(filein, birth);
         getline(filein, msv);
         filein >> sex;
+        filein >> shp;
         filein.ignore();
+        for (int i=0;i<shp;i++){
+                string thp;
+                int d;
+                getline(filein,thp);
+                filein>>d;
+                hocphan.push_back({thp, d});
+        }
         getline(filein, lop);
-        Sinhvien sv(name, msv, birth, sex, lop);
+        Sinhvien sv(name, msv, birth, sex,shp , hocphan, lop);
         sinhviens.push_back(sv);
     }
     filein.close();

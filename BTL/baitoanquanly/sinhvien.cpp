@@ -16,6 +16,8 @@ class Sinhvien{
         string msv;
         int sex;//1 la nam, 0 la nu
         string lop;
+        int shp;
+        vector<pair<string,double>> hocphan;
     public:
         Sinhvien(){
             this->name = "";
@@ -23,13 +25,18 @@ class Sinhvien{
             this->msv = "";
             this->lop = "";
             this->sex = -1;
+            this->shp = 0;
         }
-        Sinhvien(string name,string msv, string birthday, int sex, string lop ){
+        Sinhvien(string name,string msv, string birthday, int sex,int shp ,vector<pair<string,double>> hp, string lop ){
             this->name = name;
             this->birthday = birthday;
             this->msv = msv;
             this->lop = lop;
             this->sex = sex;
+            this->shp = shp;
+            for (int i=0;i<shp;i++){
+                hocphan[i] = hp[i];
+            }
         }
         //getter va setter
         void setName(string name){
@@ -46,6 +53,12 @@ class Sinhvien{
         }
         void setSex(int sex){
             this->sex = sex;
+        }
+        void setShp(int x){
+            this->shp =x;
+        }
+        void setHocphan(const vector<pair<string,double>> hocphan){
+            this->hocphan = hocphan;
         }
         string getName(){
             return this->name;
@@ -72,6 +85,12 @@ class Sinhvien{
         int getSex(){
             return sex;
         }
+        int getShp(){
+            return shp;
+        }
+        vector<pair<string, double>> getHocphan(){
+            return hocphan;
+        }
         //-------------------------------------
         friend istream& operator>>(istream &is, Sinhvien &sv){
             cout<<"Nhap ten: ";
@@ -84,6 +103,19 @@ class Sinhvien{
             getline(is,sv.birthday);
             cout<<"Nhap gioi tinh(1 la nam, 0 la nu): ";
             is>>sv.sex;
+            cout<<"Nhap so luong mon hoc: ";
+            is>>sv.shp;
+            for (int i=0;i<sv.shp;i++){
+                string thp;
+                int d;
+                is.ignore();
+                cout<<"Nhap ten mon hoc: ";
+                getline(is,thp);
+                cout<<"Nhap diem mon hoc: ";
+                is>>d;
+                sv.hocphan.push_back({thp, d});
+
+            }
             cout<<"Nhap lop: ";
             is.ignore();
             getline(is,sv.lop);
@@ -108,6 +140,14 @@ class Sinhvien{
             cout<< left <<setw(10)<<"Ngay sinh: "<<this->birthday<<endl;
             cout<< left <<setw(10)<<"Gioi tinh: "<<this->sex<<endl;
             cout<< left <<setw(10)<<"Lop: "<<this->lop<<endl;
+        }
+        void showHocphan(){
+            cout<<"Tong so hoc phan: "<<shp<<endl;
+            cout<<"Cac mon hoc va diem cua sinh vien la: \n";
+            for (int i=0;i<shp;i++){
+                cout<<hocphan[i].first<<": "<<hocphan[i].second<<endl;
+            }
+
         }
 };
 #endif
